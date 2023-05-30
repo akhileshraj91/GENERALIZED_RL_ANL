@@ -30,6 +30,19 @@ declare -r PARAMS_FILE='parameters.yaml'
 declare -r TOPOLOGY_FILE='topology.xml'
 
 
+
+if [ ! -d "$OUTPUTDIR" ]; then
+        mkdir -p "$OUTPUTDIR"
+fi
+
+if [ -z "$1" ]; then
+  APPLICATION="ones-stream-full"
+else
+  APPLICATION="$1"
+fi
+
+
+
 # files to snapshot before running the experiment
 declare -ra PRERUN_SNAPSHOT_FILES=(
 	"${PARAMS_FILE}"
@@ -121,7 +134,7 @@ do
                 tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
                 snapshot_system_state "${archive}" 'pre'
-                python GN_RL_model.py max-range-config.yaml -- ones-stream-full 33554432 10000 ${cfg}
+                python GN_RL_model.py max-range-config.yaml -- $APPLICATION 33554432 10000 ${cfg}
                 # retrieve benchmark logs and snapshot post-run state
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
 		        touch "${OUTPUTDIR}/SUCCESS"
