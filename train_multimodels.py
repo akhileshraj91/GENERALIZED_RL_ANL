@@ -21,7 +21,7 @@ APPLICATIONS = []
 
 experiment_dir = './'
 yaml_format = ruamel.yaml.YAML()
-PARAMS_PATH = experiment_dir+"PARAMS/"
+PARAMS_PATH = experiment_dir+"PARAMS_backup/"
 param_files = os.listdir(PARAMS_PATH)
 for file in param_files:
     if 'params' in file:
@@ -42,7 +42,7 @@ exec_steps = 10000                                                              
 ACTION_MIN = 40                                                                                                         # Minima of control space (power cap), Please do not change while using mathematical model for simulations.
 ACTION_MAX = 160                                                                                                        # Maxima of control space
 ACT_MID = ACTION_MIN + (ACTION_MAX - ACTION_MIN) / 2                                                                    # Midpoint of the control space to compute the normalized action space
-OBS_MAX = 60                                                                                                           # Maxima of observation space (performance)
+OBS_MAX = 250                                                                                                           # Maxima of observation space (performance)
 OBS_MIN = 0                                                                                                             # Minima of observation space
 OBS_MID = OBS_MIN + (OBS_MAX - OBS_MIN) / 2
 
@@ -80,7 +80,7 @@ def abnormal_action(a):
 class Dynamical_Sys(Env):
     def __init__(self, exec_time, c_0=0, c_1=0):
         self.action_space = Box(low=-1, high=1, shape=(1,))
-        self.observation_space = MultiDiscrete([160,2])
+        self.observation_space = MultiDiscrete([OBS_MAX,2])
         self.execution_time = exec_time
         self.c_0 = c_0
         self.c_1 = c_1
