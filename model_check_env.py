@@ -24,6 +24,7 @@ yaml_format = ruamel.yaml.YAML()
 PARAMS_PATH = experiment_dir+"PARAMS/"
 param_files = os.listdir(PARAMS_PATH)
 for file in param_files:
+    print(file)
     if 'params' in file:
         und_index = file.find('_')
         name = file[0:und_index]
@@ -42,20 +43,20 @@ exec_steps = 10000                                                              
 ACTION_MIN = 40                                                                                                         # Minima of control space (power cap), Please do not change while using mathematical model for simulations.
 ACTION_MAX = 160                                                                                                        # Maxima of control space
 ACT_MID = ACTION_MIN + (ACTION_MAX - ACTION_MIN) / 2                                                                    # Midpoint of the control space to compute the normalized action space
-OBS_MAX = 60                                                                                                           # Maxima of observation space (performance)
+OBS_MAX = 200                                                                                                           # Maxima of observation space (performance)
 OBS_MIN = 0                                                                                                             # Minima of observation space
 OBS_MID = OBS_MIN + (OBS_MAX - OBS_MIN) / 2
 
 exec_time = 10000
 tau = 0.33
 
-print(APPLICATIONS[0])
+# print(APPLICATIONS[0])
 def progress_funct(state, p_cap):                                                                                       # Function definition of the mathematical model of cluster performance and pcap relation.
     # p_now = abnormal_obs(state[0])
-    # print("The state transmitted are:",state)
+    print("The state transmitted are:",state)
     p_now = state[0]
     cluster = APPLICATIONS[state[1]]
-    # print(cluster)
+    print(cluster)
     pcap_old_L = -np.exp(-alpha[cluster] * (a[cluster] * p_cap + b[cluster] - beta[cluster]))                           # Calculation of the PCAP for fitting it into the model.
     progress_value = K_L[cluster] * T_S / (T_S + tau) * pcap_old_L + tau / (T_S + tau) * (p_now - K_L[cluster]) + \
                      K_L[cluster]                                                                                       # Mathematical relation
@@ -114,6 +115,7 @@ class Dynamical_Sys(Env):
         else:
             done = False
         info = {}
+        print("______________",self.state, reward)
         return self.state, np.float64(reward), done, info
 
 
@@ -133,16 +135,16 @@ def exec_main(c_0, c_1):  # main function
     model.save("./experiment_data/models_" + str("all") + "/dynamics_" + str(c_0) + "___" + str(c_1))
 
 
-if __name__ == "__main__":
-    fig, axs = plt.subplots(2)
-    fig.suptitle('power and performance against time')
-    C0_vals = np.linspace(0, 5, 5)
-    C1_vals = np.linspace(0, 5, 5)
-    for i in C0_vals:
-        for l in C1_vals:
-            exec_main(i, l)
+# if __name__ == "__main__":
+#     fig, axs = plt.subplots(2)
+#     fig.suptitle('power and performance against time')
+#     C0_vals = np.linspace(0, 5, 2)
+#     C1_vals = np.linspace(0, 5, 2)
+#     for i in C0_vals:
+#         for l in C1_vals:
+#             exec_man(i, l)
 
-# env = Dynamical_Sys(exec_time)
-# check_env(env, warn=True, skip_render_check=True)
+env = Dynamical_Sys(exec_time)
+check_env(env, warn=True, skip_render_check=True)
 # obs = env.reset()
 # print(obs)
