@@ -2,3 +2,4 @@
 *dynamics_*
 *data_dir*
 *trace_dir*
+__pycache__/
