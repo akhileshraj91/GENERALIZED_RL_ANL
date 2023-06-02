@@ -1,0 +1,5 @@
+timestamp: 2023-06-02T00:48:17+00:00
+runner: 
+config-file: dynamics_5.0___5.0
+benchmark: stream_c
+extra: --iterationCount=10000 --problemSize=33554432

@@ -16,15 +16,26 @@ declare -rA RUNNERS=(
 )
 
 declare -r BENCHMARK='stream_c'
-declare -r ITERATION_COUNT='10_000'
-declare -r PROBLEM_SIZE='33_554_432'
+declare -r ITERATION_COUNT=10000
 
 
 # configuration  --------------------------------------------------------------
+if [ -z "$1" ]; then
+  APPLICATION="ones-stream-full"
+else
+  APPLICATION="$1"
+fi
 
-declare -r LOGDIR='./experiment_data'  # all relative paths are relative to $LOGDIR
-declare -r DATADIR='./experiment_data/models_all'
-declare -r OUTPUTDIR='./experiment_data/GN_RL_control'
+if [ "$APPLICATION" == "ones-npb-ep" ]; then
+  declare -r PROBLEM_SIZE=22
+else
+  declare -r PROBLEM_SIZE=33554432
+fi
+
+
+declare -r LOGDIR="./experiment_data"  # all relative paths are relative to $LOGDIR
+declare -r DATADIR="./experiment_data/models_all"
+declare -r OUTPUTDIR="./experiment_data/RL_controller/$APPLICATION"
 
 declare -r PARAMS_FILE='parameters.yaml'
 declare -r TOPOLOGY_FILE='topology.xml'
@@ -35,11 +46,7 @@ if [ ! -d "$OUTPUTDIR" ]; then
         mkdir -p "$OUTPUTDIR"
 fi
 
-if [ -z "$1" ]; then
-  APPLICATION="ones-stream-full"
-else
-  APPLICATION="$1"
-fi
+
 
 
 
@@ -120,7 +127,6 @@ function snapshot_system_state {
 	rm --recursive --force -- "${wd}"
 }
 
-echo "$DATADIR"
 
 for cfg in "$DATADIR"/*
 do
@@ -134,7 +140,8 @@ do
                 tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
                 snapshot_system_state "${archive}" 'pre'
-                python GN_RL_model.py max-range-config.yaml -- $APPLICATION 33554432 10000 ${cfg}
+				echo python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
+                python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
                 # retrieve benchmark logs and snapshot post-run state
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
 		        touch "${OUTPUTDIR}/SUCCESS"

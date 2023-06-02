@@ -18,8 +18,36 @@ import ruamel.yaml
 import nrm.tooling as nrm
 from stable_baselines3 import PPO
 import train_multimodels as ncna
+import os
 
+# WLs = {'ones-stream-full':0,'ones-stream-add':1,'ones-stream-triad':2,'ones-stream-scale':3,'ones-stream-copy':4,'ones-npb-ep':5}
 
+a = {}
+b = {}
+alpha = {}
+beta = {}
+K_L = {}
+APPLICATIONS = []
+
+experiment_dir = './'
+yaml_format = ruamel.yaml.YAML()
+PARAMS_PATH = experiment_dir+"PARAMS_backup/"
+param_files = os.listdir(PARAMS_PATH)
+for file in param_files:
+    if 'params' in file:
+        und_index = file.find('_')
+        name = file[0:und_index]
+        APPLICATIONS.append(name)
+        with open(PARAMS_PATH+file) as files:
+            parameters = yaml_format.load(files)
+            a[name] = parameters['rapl']['slope']
+            b[name] = parameters['rapl']['offset']
+            alpha[name] = parameters['model']['alpha']
+            beta[name] = parameters['model']['beta']
+            K_L[name] = parameters['model']['gain']
+            files.close()
+
+print(APPLICATIONS)
 
 # frequency (in hertz) for RAPL sensor polling
 RAPL_SENSOR_FREQ = 1
@@ -34,38 +62,42 @@ LOGGER_NAME = 'controller-runner'
 
 LOGS_LEVEL = 'INFO'
 
-LOGS_CONF = {
-    'version': 1,
-    'formatters': {
-        'precise': {
-            # timestamp is epoch in seconds
-            'format': '{created}\u0000{levelname}\u0000{process}\u0000{funcName}\u0000{message}',
-            'style': '{',
+def logs_conf_func():
+    LOGS_CONF = {
+        'version': 1,
+        'formatters': {
+            'precise': {
+                # timestamp is epoch in seconds
+                'format': '{created}\u0000{levelname}\u0000{process}\u0000{funcName}\u0000{message}',
+                'style': '{',
+            },
         },
-    },
-    'handlers': {
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': f'./experiment_data/GN_RL_control/{LOGGER_NAME}.log',
-            'mode': 'w',
-            'level': LOGS_LEVEL,
-            'formatter': 'precise',
-            'filters': [],
+        'handlers': {
+            'file': {
+                'class': 'logging.FileHandler',
+                'filename': f'./experiment_data/RL_controller/{WORKLOAD}/{LOGGER_NAME}.log',
+                'mode': 'w',
+                'level': LOGS_LEVEL,
+                'formatter': 'precise',
+                'filters': [],
+            },
         },
-    },
-    'loggers': {
-        LOGGER_NAME: {
-            'level': LOGS_LEVEL,
-            'handlers': [
-                'file',
-            ],
+        'loggers': {
+            LOGGER_NAME: {
+                'level': LOGS_LEVEL,
+                'handlers': [
+                    'file',
+                ],
+            },
         },
-    },
-}
+    }
 
-logging.config.dictConfig(LOGS_CONF)
+    logging.config.dictConfig(LOGS_CONF)
 
-logger = logging.getLogger(LOGGER_NAME)
+
+    logger = logging.getLogger(LOGGER_NAME)
+    return LOGS_CONF, logger
+
 
 
 # controller configuration validation/load  ###################################
@@ -204,7 +236,7 @@ assert DUMPED_MSG_TYPES.issubset(CSV_FIELDS)
 
 def initialize_csvwriters(stack: contextlib.ExitStack):
     csvfiles = {
-        msg_type: stack.enter_context(open(f'./experiment_data/GN_RL_control/dump_{msg_type}.csv', 'w'))
+        msg_type: stack.enter_context(open(f'./experiment_data/RL_controller/{WORKLOAD}/dump_{msg_type}.csv', 'w'))
         for msg_type in DUMPED_MSG_TYPES
     }
 
@@ -347,7 +379,8 @@ class PIController:
             if data['sensorID'].startswith('RaplKey'):
                 window_duration = timestamp - self.rapl_window_timestamp
                 progress_estimation = self._estimate_progress(self.heartbeat_timestamps)
-                obs = [progress_estimation,0]
+                # print(progress_estimation,INDEX)
+                obs = [progress_estimation, INDEX]
                 action, _states = self.model.predict(obs, deterministic=True)
                 ab_action = ncna.abnormal_action(action)
                 powercap = ab_action[0]
@@ -523,5 +556,8 @@ def run(options, cmd):
 
 if __name__ == '__main__':
     options, cmd = cli()
-    # print("options are", options, "and commands are " , cmd)
+    WORKLOAD = cmd[0]
+    INDEX = APPLICATIONS.index(WORKLOAD)
+    print(INDEX,WORKLOAD)
+    LOGS_CONF, logger = logs_conf_func()
     run(options, cmd)
