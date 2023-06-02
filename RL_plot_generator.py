@@ -104,7 +104,7 @@ for ex in EX_DIRS:
                     data[cluster][trace]['label'] = (c_1,c_2)
                     col = 'r'
                else:
-                    data[cluster][trace]['label'] = {}
+                    data[cluster][trace]['label'] = None
                     col = 'k'
                # print(data[cluster][trace]['label'])
           pareto[cluster] = pd.DataFrame({'Execution Time':[data[cluster][trace]['aggregated_values']['progress_frequency_median']['median'].index[-1] for trace in traces[cluster][0]],'Labels': [data[cluster][trace]['label'] for trace in traces[cluster][0]]},index=[data[cluster][trace]['aggregated_values']['energy']/10**3 for trace in traces[cluster][0]])
@@ -128,14 +128,14 @@ for ex in EX_DIRS:
                axes[k].text(data[0]+0.03,data[1]+0.03,z_data[i],fontsize=2)
 
           axes[k].grid(True)
-          axes[k].set_ylabel('Execution time [s]',fontsize = 3)
-          axes[k].set_xlabel('Energy consumption [kJ]', fontsize = 3)
+          axes[k].set_ylabel('Execution time [s]',fontsize = 3.5)
+          axes[k].set_xlabel('Energy consumption [kJ]', fontsize = 3.5)
           axes[k].tick_params(axis='x', labelsize=4)
           axes[k].tick_params(axis='y', labelsize=4)
           axes[k].legend(fontsize = 3)
           # title = "Comparing RL and PI controller with varying reward fucntions and varying setpoints."
           title = f"{cluster}"
-          axes[k].set_title(title,fontsize=5)
+          axes[k].set_title(title,fontsize=5, color = 'blue')
           # axes[k].hold(True)
      ##########################################################################################################################
 
