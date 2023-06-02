@@ -32,7 +32,7 @@ for param in parameter_files:
             hyp_ind = file.find('-')
             dot_ind = file.find('.')
             und_ind = file.find('_')
-            with open(file,'w') as fil:
+            with open(OUTPUT_DIR+SPF_name+f'/{file}','w') as fil:
                 sp = file[hyp_ind+1:dot_ind]
                 parameters['controller']['setpoint'] = float(sp)/100
                 print(parameters)

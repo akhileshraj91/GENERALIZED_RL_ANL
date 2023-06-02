@@ -16,7 +16,7 @@ declare -rA RUNNERS=(
 )
 
 declare -r BENCHMARK='stream_c'
-declare -r ITERATION_COUNT=100
+declare -r ITERATION_COUNT=10000
 
 
 if [ -z "$1" ]; then
