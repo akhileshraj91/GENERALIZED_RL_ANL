@@ -1,0 +1,4 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>./experiment_data/models_all/dynamics_0.0___0.0
+['ones-npb-ep', 'ones-stream-full', 'ones-stream-add', 'ones-stream-triad', 'ones-stream-scale', 'ones-stream-copy']
+['ones-npb-ep', 'ones-stream-full', 'ones-stream-add', 'ones-stream-triad', 'ones-stream-scale', 'ones-stream-copy']
+1 ones-stream-full

@@ -140,11 +140,10 @@ do
                 tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
                 snapshot_system_state "${archive}" 'pre'
-				echo python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
                 python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
                 # retrieve benchmark logs and snapshot post-run state
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
-		        touch "${OUTPUTDIR}/SUCCESS"
+		touch "${OUTPUTDIR}/SUCCESS"
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- SUCCESS
                 snapshot_system_state "${archive}" 'post'
                 # compress archive

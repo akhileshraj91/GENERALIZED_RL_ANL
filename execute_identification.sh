@@ -5,12 +5,19 @@ export LC_ALL=C  # ensure we are working with known locales
 #set -e -u -f -o pipefail # safer shell script
 
 declare -r PROGRAM=${0##*/}
-
+declare -r ITERATION_COUNT=10000
+# declare -r PROBLEM_SIZE='33_554_432'
 
 if [ -z "$1" ]; then
   APPLICATION="ones-stream-full"
 else
   APPLICATION="$1"
+fi
+
+if [ "$APPLICATION" == "ones-npb-ep" ]; then
+  declare -r PROBLEM_SIZE=22
+else
+  declare -r PROBLEM_SIZE=33554432
 fi
 
 
@@ -19,8 +26,7 @@ declare -r OUTPUTDIR=./experiment_data/${APPLICATION}_identification
 declare -r BENCHMARK='stream_c'
 declare -r RUNNER='identification'
 declare -r PARAMS_FILE='parameters.yaml'
-declare -r ITERATION_COUNT='10_000'
-declare -r PROBLEM_SIZE='33_554_432'
+
 declare -r TOPOLOGY_FILE='topology.xml'
 
 if [ ! -d "$OUTPUTDIR" ]; then
@@ -114,13 +120,14 @@ do
 		tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
 		tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
 		snapshot_system_state "${archive}" 'pre'
-		python identification.py --enable-libnrm ${cfg} -- $APPLICATION 33554422 10000
+		echo python identification.py --enable-libnrm ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
+		python identification.py --enable-libnrm ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
 		# retrieve benchmark logs and snapshot post-run state
 		tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
 		snapshot_system_state "${archive}" 'post'
 		# compress archive
 		xz --compress "${archive}"
-		sleep 5
+		sleep 10
 		python enforce_max_power.py max-range-config.yaml
         	sleep 10
 		echo __________________________________________________________________________________________________
