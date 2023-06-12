@@ -150,7 +150,7 @@ do
                 snapshot_system_state "${archive}" 'post'
                 # compress archive
                 xz --compress "${archive}"
-		sleep 10
+		sleep 20
 		python enforce_max_power.py max-range-config.yaml
 		echo __________________________________________________________________________________________________
 		sleep 10

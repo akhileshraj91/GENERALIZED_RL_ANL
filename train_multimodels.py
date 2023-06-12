@@ -51,13 +51,13 @@ OBS_MID = OBS_MIN + (OBS_MAX - OBS_MIN) / 2
 exec_time = 10000
 tau = 0.33
 
-print(APPLICATIONS)
+# print(APPLICATIONS)
 def progress_funct(state, p_cap):                                                                                       # Function definition of the mathematical model of cluster performance and pcap relation.
     # p_now = abnormal_obs(state[0])
     # print("The state transmitted are:",state)
     p_now = state[0]
     cluster = APPLICATIONS[state[1]]
-    print(cluster)
+    # print(cluster)
     pcap_old_L = -np.exp(-alpha[cluster] * (a[cluster] * p_cap + b[cluster] - beta[cluster]))                           # Calculation of the PCAP for fitting it into the model.
     progress_value = K_L[cluster] * T_S / (T_S + tau) * pcap_old_L + tau / (T_S + tau) * (p_now - K_L[cluster]) + \
                      K_L[cluster]                                                                                       # Mathematical relation
@@ -138,8 +138,8 @@ def exec_main(c_0, c_1):  # main function
 if __name__ == "__main__":
     fig, axs = plt.subplots(2)
     fig.suptitle('power and performance against time')
-    C0_vals = np.linspace(0, 5, 3)
-    C1_vals = np.linspace(0, 5, 3)
+    C0_vals = np.linspace(0, 10, 10)
+    C1_vals = np.linspace(0, 10, 10)
     for i in C0_vals:
         for l in C1_vals:
             exec_main(i, l)

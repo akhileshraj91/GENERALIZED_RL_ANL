@@ -14,3 +14,4 @@ controller:
   setpoint: 0.45
   response-time: 30
   power-range: [40, 200]
+

@@ -243,8 +243,8 @@ for cluster in clusters:
     pcap2perf_model[cluster] = pcap2perf(sc_requested[cluster].index, power_parameters[cluster][0], power_parameters[cluster][1], power2perf_params[cluster][1], power2perf_params[cluster][0], power2perf_params[cluster][2]) # model with optimized perfinf
 
 # plot style
-clusters_styles = {0:'orange',1:'black',2:'skyblue',3:'black'}
-clusters_markers = {0:'o',1:'x',2:'v',3:'x'}
+clusters_styles = {0:'orange',1:'black',2:'skyblue',3:'black',4:'cyan',5:'violet'}
+clusters_markers = {0:'o',1:'x',2:'v',3:'+',4:'.',5:'*'}
 plt.rcParams.update({'font.size': 14})
 
 
@@ -309,7 +309,8 @@ for cluster in clusters:
 
 
 
-
+    if not os.path.exists('./PARAMS/'):
+        os.makedirs('./PARAMS')
     with open(f'./PARAMS/{cluster}_params.yaml','w') as file2:
         yaml_format.dump(parameters, file2)
   

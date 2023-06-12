@@ -10,7 +10,7 @@ import numpy as np
 import tarfile
 yaml = YAML()
 
-experiment_dir = './PARAMS_backup/'
+experiment_dir = './PARAMS/'
 parameter_files = next(os.walk(experiment_dir))[2]
 print(parameter_files)
 

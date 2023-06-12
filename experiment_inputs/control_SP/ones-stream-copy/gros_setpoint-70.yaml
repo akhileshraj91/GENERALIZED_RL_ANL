@@ -1,0 +1,16 @@
+version: 1
+
+rapl:
+  slope: 0.94
+  offset: 0.5
+
+model:
+  alpha: 0.03
+  beta: 29.8
+  gain: 229.4
+  time-constant: 0.33
+
+controller:
+  setpoint: 0.7
+  response-time: 30
+  power-range: [40, 200]
