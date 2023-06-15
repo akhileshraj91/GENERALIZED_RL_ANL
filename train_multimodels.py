@@ -21,7 +21,7 @@ APPLICATIONS = []
 
 experiment_dir = './'
 yaml_format = ruamel.yaml.YAML()
-PARAMS_PATH = experiment_dir+"PARAMS_backup/"
+PARAMS_PATH = experiment_dir+"PARAMS/"
 param_files = os.listdir(PARAMS_PATH)
 for file in param_files:
     if 'params' in file:

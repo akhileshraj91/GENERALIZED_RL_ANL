@@ -1,9 +1,9 @@
 # bash exec_gen_models.sh
-# bash exec_gen_models.sh ones-stream-copy
-# bash exec_gen_models.sh ones-stream-add
-# bash exec_gen_models.sh ones-stream-triad
-# bash exec_gen_models.sh ones-stream-scale
-# bash exec_gen_models.sh ones-npb-ep
+bash execute_generate_models.sh ones-stream-copy
+bash execute_generate_models.sh ones-stream-add
+bash execute_generate_models.sh ones-stream-triad
+bash execute_generate_models.sh ones-stream-scale
+bash execute_generate_models.sh ones-npb-ep
 
 # bash execute_identification.sh
 # bash execute_identification.sh ones-stream-copy
@@ -13,8 +13,8 @@
 # bash execute_identification.sh ones-npb-ep
 
 # bash execute_PI_control.sh
-bash execute_PI_control.sh ones-stream-copy
+# bash execute_PI_control.sh ones-stream-copy
 # bash execute_PI_control.sh ones-stream-add
-bash execute_PI_control.sh ones-stream-triad
-bash execute_PI_control.sh ones-stream-scale
+# bash execute_PI_control.sh ones-stream-triad
+# bash execute_PI_control.sh ones-stream-scale
 # bash execute_PI_control.sh ones-npb-ep

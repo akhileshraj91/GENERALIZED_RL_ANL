@@ -18,8 +18,8 @@
     <info name="Backend" value="Linux"/>
     <info name="LinuxCgroup" value="/"/>
     <info name="OSName" value="Linux"/>
-    <info name="OSRelease" value="5.4.0-147-generic"/>
-    <info name="OSVersion" value="#164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023"/>
+    <info name="OSRelease" value="5.4.0-150-generic"/>
+    <info name="OSVersion" value="#167-Ubuntu SMP Mon May 15 17:35:05 UTC 2023"/>
     <info name="HostName" value="test"/>
     <info name="Architecture" value="x86_64"/>
     <info name="hwlocVersion" value="2.7.1"/>
