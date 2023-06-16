@@ -16,6 +16,10 @@ fi
 
 if [ "$APPLICATION" == "ones-npb-ep" ]; then
   declare -r PROBLEM_SIZE=22
+elif [ "$APPLICATION" == "ones-solvers-cg" ]; then
+  declare -r PROBLEM_SIZE=10000
+elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
+  declare -r PROBLEM_SIZE=10000
 else
   declare -r PROBLEM_SIZE=33554432
 fi
@@ -120,8 +124,14 @@ do
 		tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
 		tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
 		snapshot_system_state "${archive}" 'pre'
-		echo python identification.py --enable-libnrm ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
-		python identification.py --enable-libnrm ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
+		echo $APPLICATION
+                if [ "$APPLICATION" == "ones-solvers-cg" ]; then
+		  python identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_120.yaml ones-solvers-cg 10000 poor 0
+                elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
+		  python identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_120.yaml ones-solvers-bicgstab 10000 poor 0
+                else
+                  python identification.py --enable-libnrm ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
+                fi
 		# retrieve benchmark logs and snapshot post-run state
 		tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
 		snapshot_system_state "${archive}" 'post'
@@ -129,7 +139,7 @@ do
 		xz --compress "${archive}"
 		sleep 10
 		python enforce_max_power.py max-range-config.yaml
-        	sleep 10
+        	sleep 20
 		echo __________________________________________________________________________________________________
 	fi
 
