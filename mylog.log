@@ -1,274 +1,0 @@
-Script started on 2023-06-12 01:03:31+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="270" LINES="74"]
-]0;cc@test: ~/GENERALIZED_RL_ANL[01;32mcc@test[00m:[01;34m~/GENERALIZED_RL_ANL[00m$ cd
-]0;cc@test: ~[01;32mcc@test[00m:[01;34m~[00m$ cd v0.7/
-]0;cc@test: ~/v0.7[01;32mcc@test[00m:[01;34m~/v0.7[00m$ nix-shell
-trace: [1;31mwarning: String 'configureFlags' is deprecated and will be removed in release 23.05. Please use a list of strings. Derivation name: nrm-benchmarks, file: /home/cc/v0.7/nix/nrm-benchmarks.nix[0m
-[?2004h
-[1;32m[nix-shell:~/v0.7]$[0m ki[K[Kcd
-[?2004l[?2004h
-[1;32m[nix-shell:~]$[0m cd GENERALIZED_RL_ANL/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m ls
-[?2004lGN_RL_model.py  [0m[01;34mPARAMS_backup[0m  [01;34mRESULTS[0m               RL_plot_generator.py  commands       enforce_max_power.py   execute_generate_models.sh  [01;34mexperiment_data[0m    generate_yaml.py   max-range-config.yaml  mylog.log           terminal_output.txt
-[01;34mPARAMS[0m          README.md      RL_data_generator.py  [01;34m__pycache__[0m           [01;32mcontroller.py[0m  execute_PI_control.sh  execute_identification.sh   [01;34mexperiment_inputs[0m  [01;32midentification.py[0m  model_check_env.py     [01;32mstatic-analysis.py[0m  train_multimodels.py
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m lscd GENERALIZED_RL_ANL/[Kexitscript mylog.logls[Kcd GENERALIZED_RL_ANL/[Kexits[Kcreen    -r[8Pexitnix-shell[1Pcd v0.7/[4Pexitps -uxexitls[Kp -lskill -9 36869389590541922738[K 369308[8Pps -uxkill -9 369169705227383087867061521788116331407[2P*[7Pps -ux[4Plspython identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_40.yaml -- ones-stream-full 33554432 10000[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kvim execute_PI_control.sh [8Pcontroller.py[C[6@cat terminal_output.txt[Cls[Ksource commands | tee terminal_output.txt[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash execute_[Kls[Kcd ..[3Plscd ..[3Plscd ..[3Plscd ..[3Plsbash execute_source commands | tee terminal_output.txt[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kcat terminal_output.txt [6Pvim controller.py[C[8@execute_PI_control.sh[Cls[Kpython identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_40.yaml -- ones-stream-full 33554432 10000[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kpython identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_40.yaml -- ones-stream-full 33554432 10000
-[?2004lLogging to /tmp/nrm.log
-Floating point exception (core dumped)
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m cd experiment_data/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m ls
-[?2004l[0m[01;34mPI_control[0m  [01;34mRL_controller[0m  [01;34mmodels_all[0m  [01;34mones-npb-ep_identification[0m  [01;34mones-stream-add_identification[0m  [01;34mones-stream-copy_identification[0m  [01;34mones-stream-full_identification[0m  [01;34mones-stream-scale_identification[0m  [01;34mones-stream-triad_identification[0m  sample_params.yaml
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m cd PI_control/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data/PI_control]$[0m ls
-[?2004l[0m[01;34mones-npb-ep[0m  [01;34mones-stream-add[0m  [01;34mones-stream-copy[0m  [01;34mones-stream-full[0m  [01;34mones-stream-scale[0m  [01;34mones-stream-triad[0m
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data/PI_control]$[0m cd ..
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m ls
-[?2004l[0m[01;34mPI_control[0m  [01;34mRL_controller[0m  [01;34mmodels_all[0m  [01;34mones-npb-ep_identification[0m  [01;34mones-stream-add_identification[0m  [01;34mones-stream-copy_identification[0m  [01;34mones-stream-full_identification[0m  [01;34mones-stream-scale_identification[0m  [01;34mones-stream-triad_identification[0m  sample_params.yaml
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m cd ones-npb-ep_identification/ERROR:nrm:This command does not have a registered upstream client.
-ERROR:nrm:This command does not have a registered upstream client.
-ls[Kcd ones-npb-ep_identification/[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m 
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m 
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m 
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m [H[2J
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m ls
-[?2004l[0m[01;34mPI_control[0m  [01;34mRL_controller[0m  [01;34mmodels_all[0m  [01;34mones-npb-ep_identification[0m  [01;34mones-stream-add_identification[0m  [01;34mones-stream-copy_identification[0m  [01;34mones-stream-full_identification[0m  [01;34mones-stream-scale_identification[0m  [01;34mones-stream-triad_identification[0m  sample_params.yaml
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m cd ones-npb-ep_identification/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data/ones-npb-ep_identification]$[0m ls
-[?2004ldump_pubMeasurements.csv                                 [0m[01;34mpreliminaries_stream_c_2023-06-11T03:16:21+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T03:48:04+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T04:15:19+00:00[0m
-dump_pubProgress.csv                                     [01;31mpreliminaries_stream_c_2023-06-11T03:16:21+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T03:48:04+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T04:15:19+00:00.tar.xz[0m
-identification-runner.log                                [01;34mpreliminaries_stream_c_2023-06-11T03:19:14+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T03:54:19+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T04:19:45+00:00[0m
-parameters.yaml                                          [01;31mpreliminaries_stream_c_2023-06-11T03:19:14+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T03:54:19+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T04:19:45+00:00.tar.xz[0m
-[01;34mpreliminaries_stream_c_2023-06-11T03:07:08+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T03:22:00+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T04:00:28+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T04:23:44+00:00[0m
-[01;31mpreliminaries_stream_c_2023-06-11T03:07:08+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T03:22:00+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T04:00:28+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T04:23:44+00:00.tar.xz[0m
-[01;34mpreliminaries_stream_c_2023-06-11T03:10:21+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T03:31:38+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T04:05:35+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T04:27:21+00:00[0m
-[01;31mpreliminaries_stream_c_2023-06-11T03:10:21+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T03:31:38+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T04:05:35+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T04:27:21+00:00.tar.xz[0m
-[01;34mpreliminaries_stream_c_2023-06-11T03:13:24+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T03:40:19+00:00[0m         [01;34mpreliminaries_stream_c_2023-06-11T04:10:36+00:00[0m         topology.xml
-[01;31mpreliminaries_stream_c_2023-06-11T03:13:24+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T03:40:19+00:00.tar.xz[0m  [01;31mpreliminaries_stream_c_2023-06-11T04:10:36+00:00.tar.xz[0m
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data/ones-npb-ep_identification]$[0m [H[2J
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data/ones-npb-ep_identification]$[0m cd ..
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m ls
-[?2004l[0m[01;34mPI_control[0m  [01;34mRL_controller[0m  [01;34mmodels_all[0m  [01;34mones-npb-ep_identification[0m  [01;34mones-stream-add_identification[0m  [01;34mones-stream-copy_identification[0m  [01;34mones-stream-full_identification[0m  [01;34mones-stream-scale_identification[0m  [01;34mones-stream-triad_identification[0m  sample_params.yaml
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m cd ..
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m ls
-[?2004lGN_RL_model.py  [0m[01;34mPARAMS_backup[0m  [01;34mRESULTS[0m               RL_plot_generator.py  commands       enforce_max_power.py   execute_generate_models.sh  [01;34mexperiment_data[0m    generate_yaml.py   max-range-config.yaml  mylog.log           terminal_output.txt
-[01;34mPARAMS[0m          README.md      RL_data_generator.py  [01;34m__pycache__[0m           [01;32mcontroller.py[0m  execute_PI_control.sh  execute_identification.sh   [01;34mexperiment_inputs[0m  [01;32midentification.py[0m  model_check_env.py     [01;32mstatic-analysis.py[0m  train_multimodels.py
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m vim execute_[K_[K[K[K[K[K[K[K[K[K[K[K[Kps -ix[K[Kux
-[?2004lUSER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-cc       1522038  0.0  0.0  14204  5048 ?        S    00:56   0:00 sshd: cc@pts/0
-cc       1522039  0.0  0.0  10296  5128 pts/0    Ss   00:56   0:00 -bash
-cc       1522459  0.0  0.0  18368  9460 ?        Ss   01:01   0:00 /lib/systemd/systemd --user
-cc       1522460  0.0  0.0 170416  4812 ?        S    01:01   0:00 (sd-pam)
-cc       1522467  0.0  0.0  10144  4960 tty1     S+   01:01   0:00 -bash
-cc       1522565  0.0  0.0  10124  5028 ttyS0    S+   01:01   0:00 -bash
-cc       1529027  0.0  0.0   7488   732 pts/0    R+   01:03   0:00 script mylog.log
-cc       1529028  0.0  0.0  10136  5052 pts/1    Ss   01:03   0:00 bash -i
-cc       1529036  0.1  0.0  10380  8124 pts/1    S    01:03   0:07 bash --rcfile /tmp/nix-shell-1529036-0/rc
-cc       1535479  0.0  0.0 1073979788 42144 pts/1 S   01:04   0:00 python identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_40.yaml -- ones-stream-full 33554432 10000
-cc       1535486  2.9  0.0 1074057812 177444 pts/1 Sl 01:04   3:23 /nix/store/vzqny68wq33dcg4hkdala51n5vqhpnwc-python3-3.9.12/bin/python3.9 /nix/store/jxdfmannwzvgqa877qcik4vzzsvq6960-python3.9-nrm-python/bin/.nrmd-wrapped -y {"raplCfg": {"raplActions": [{"microwatts": 
-cc       1540539  0.0  0.0  10772  3168 pts/1    R+   03:01   0:00 ps -ux
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m kill -9 [7m1535479[27m1535479
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m ps -ux
-[?2004lUSER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-cc       1522038  0.0  0.0  14204  5048 ?        S    00:56   0:00 sshd: cc@pts/0
-cc       1522039  0.0  0.0  10296  5128 pts/0    Ss   00:56   0:00 -bash
-cc       1522459  0.0  0.0  18368  9460 ?        Ss   01:01   0:00 /lib/systemd/systemd --user
-cc       1522460  0.0  0.0 170416  4812 ?        S    01:01   0:00 (sd-pam)
-cc       1522467  0.0  0.0  10144  4960 tty1     S+   01:01   0:00 -bash
-cc       1522565  0.0  0.0  10124  5028 ttyS0    S+   01:01   0:00 -bash
-cc       1529027  0.0  0.0   7488   732 pts/0    R+   01:03   0:00 script mylog.log
-cc       1529028  0.0  0.0  10136  5052 pts/1    Ss   01:03   0:00 bash -i
-cc       1529036  0.1  0.0  10380  8124 pts/1    S    01:03   0:07 bash --rcfile /tmp/nix-shell-1529036-0/rc
-cc       1535486  2.8  0.0 1074057812 177444 pts/1 Sl 01:04   3:23 /nix/store/vzqny68wq33dcg4hkdala51n5vqhpnwc-python3-3.9.12/bin/python3.9 /nix/store/jxdfmannwzvgqa877qcik4vzzsvq6960-python3.9-nrm-python/bin/.nrmd-wrapped -y {"raplCfg": {"raplActions": [{"microwatts": 
-cc       1540540  0.0  0.0  10772  3160 pts/1    R+   03:01   0:00 ps -ux
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m [H[2J
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m vim coo[Kntroller.py 
-[?2004l[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;74r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[74;1H"controller.py" 605L, 19845C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m#!/usr/bin/env python3
-# -*- coding: utf-8 -*-[m
-
-[35mimport[m argparse
-[35mimport[m contextlib
-[35mimport[m csv
-[35mimport[m logging
-[35mimport[m logging.config
-[35mimport[m math
-[35mimport[m pathlib
-[35mimport[m statistics
-[35mimport[m time
-[35mimport[m uuid
-
-[35mimport[m cerberus
-[35mimport[m ruamel.yaml
-
-[35mimport[m nrm.tooling [38;5;130mas[m nrm
-[35mimport[m os
-
-[34m# experiment_dir = '/home/cc/ANL_comparison/experiment_data/PI_control/'
-# if not os.path.isdir(experiment_dir):
-#     os.mkdir(experiment_dir)
-
-# frequency (in hertz) for RAPL sensor polling[m
-RAPL_SENSOR_FREQ = [31m1[m
-
-[34m# maximum number of tries to get extra sensors definitions[m
-CPD_SENSORS_MAXTRY = [31m5[m
-
-
-[34m# logging configuration  ######################################################[m
-
-LOGGER_NAME = [31m'controller-runner'[m
-
-LOGS_LEVEL = [31m'INFO'[m
-
-[38;5;130mdef[m [36mlogs_conf_func[m():
-    LOGS_CONF = {[40;9H[31m'version'[m: [31m1[m,[41;9H[31m'formatters'[m: {[42;13H[31m'precise'[m: {[43;17H[34m# timestamp is epoch in seconds[m[44;17H[31m'format'[m: [31m'{created}[m[35m\u0000[m[31m{levelname}[m[35m\u0000[m[31m{process}[m[35m\u0000[m[31m{funcName}[m[35m\u0000[m[31m{message}'[m,[45;17H[31m'style'[m: [31m'{'[m,[46;13H},[47;9H},[48;9H[31m'handlers'[m: {[49;13H[31m'file'[m: {[50;17H[31m'class'[m: [31m'logging.FileHandler'[m,[51;17H[31m'filename'[m: f[31m'./experiment_data/PI_control/{WORKLOAD}/{LOGGER_NAME}.log'[m,[52;17H[31m'mode'[m: [31m'w'[m,[53;17H[31m'level'[m: LOGS_LEVEL,[54;17H[31m'formatter'[m: [31m'precise'[m,[55;17H[31m'filters'[m: [],[56;13H},[57;9H},[58;9H[31m'loggers'[m: {[59;13HLOGGER_NAME: {[60;17H[31m'level'[m: LOGS_LEVEL,[61;17H[31m'handlers'[m: [[62;21H[31m'file'[m,[63;17H],[64;13H},[65;9H},
-    }[68;5Hlogging.config.dictConfig(LOGS_CONF)[70;5Hlogger = logging.getLogger(LOGGER_NAME)
-    [38;5;130mreturn[m LOGS_CONF, logger[74;253H5,1[11CTop[5;1H[?25h[27m[23m[29m[m[H[2J[?25l[1;1H[96m#!/usr/bin/env python3
-# -*- coding: utf-8 -*-[m
-
-[38;5;81mimport[m argparse
-[38;5;81mimport[m contextlib
-[38;5;81mimport[m csv
-[38;5;81mimport[m logging
-[38;5;81mimport[m logging.config
-[38;5;81mimport[m math
-[38;5;81mimport[m pathlib
-[38;5;81mimport[m statistics
-[38;5;81mimport[m time
-[38;5;81mimport[m uuid
-
-[38;5;81mimport[m cerberus
-[38;5;81mimport[m ruamel.yaml
-
-[38;5;81mimport[m nrm.tooling [93mas[m nrm
-[38;5;81mimport[m os
-
-[96m# experiment_dir = '/home/cc/ANL_comparison/experiment_data/PI_control/'
-# if not os.path.isdir(experiment_dir):
-#     os.mkdir(experiment_dir)
-
-# frequency (in hertz) for RAPL sensor polling[m
-RAPL_SENSOR_FREQ = [95m1[m
-
-[96m# maximum number of tries to get extra sensors definitions[m
-CPD_SENSORS_MAXTRY = [95m5[m
-
-
-[96m# logging configuration  ######################################################[m
-
-LOGGER_NAME = [95m'controller-runner'[m
-
-LOGS_LEVEL = [95m'INFO'[m
-
-[93mdef[m [1m[96mlogs_conf_func[m():
-    LOGS_CONF = {[40;9H[95m'version'[m: [95m1[m,[41;9H[95m'formatters'[m: {[42;13H[95m'precise'[m: {[43;17H[96m# timestamp is epoch in seconds[m[44;17H[95m'format'[m: [95m'{created}[m[38;5;224m\u0000[m[95m{levelname}[m[38;5;224m\u0000[m[95m{process}[m[38;5;224m\u0000[m[95m{funcName}[m[38;5;224m\u0000[m[95m{message}'[m,[45;17H[95m'style'[m: [95m'{'[m,[46;13H},[47;9H},[48;9H[95m'handlers'[m: {[49;13H[95m'file'[m: {[50;17H[95m'class'[m: [95m'logging.FileHandler'[m,[51;17H[95m'filename'[m: f[95m'./experiment_data/PI_control/{WORKLOAD}/{LOGGER_NAME}.log'[m,[52;17H[95m'mode'[m: [95m'w'[m,[53;17H[95m'level'[m: LOGS_LEVEL,[54;17H[95m'formatter'[m: [95m'precise'[m,[55;17H[95m'filters'[m: [],[56;13H},[57;9H},[58;9H[95m'loggers'[m: {[59;13HLOGGER_NAME: {[60;17H[95m'level'[m: LOGS_LEVEL,[61;17H[95m'handlers'[m: [[62;21H[95m'file'[m,[63;17H],[64;13H},[65;9H},
-    }[68;5Hlogging.config.dictConfig(LOGS_CONF)[70;5Hlogger = logging.getLogger(LOGGER_NAME)
-    [93mreturn[m LOGS_CONF, logger[74;253H5,1[11CTop"controller.py" 605L, 19845C[5;1H[?25h[?25l[74;243H^[[5;1H[74;243H  [5;1H[74;243H^[[5;1H[74;243H  [5;1H[?25h[?25l[74;243H:[5;1H[74;1H[K[74;1H:[?2004h[?25hwq[?25l[?2004l"controller.py" 605L, 19845C written[23;2t[23;1t
-[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m vim execute_PI_control.sh 
-[?2004l[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;74r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[74;1H"execute_PI_control.sh" 160L, 4527C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[38;5;130mif [[m [38;5;130m![m [38;5;130m-d[m [38;5;130m"[m[35m$OUTPUTDIR[m[38;5;130m"[m [38;5;130m];[m [38;5;130mthen[2;9Hmkdir[m [38;5;130m-p[m [38;5;130m"[m[35m$OUTPUTDIR[m[38;5;130m"
-fi[m
-
-[34m# helper functions  -----------------------------------------------------------[m
-
-[36mfunction[m [36mdump_parameters {[m[8;9H[38;5;130mdeclare[m [35m-r[m [36mtimestamp[m=[38;5;130m"[m[35m${1}[m[38;5;130m"[9;9Hdeclare[m [35m-r[m [36mrunner[m=[38;5;130m"[m[35m${2}[m[38;5;130m"[10;9Hdeclare[m [35m-r[m [36mcfg[m=[38;5;130m"[m[35m${3}[m[38;5;130m"[11;9Hdeclare[m [35m-r[m [36mbenchmark[m=[38;5;130m"[m[35m${4}[m[38;5;130m"[12;9Hdeclare[m [35m-r[m [36mextra[m=[38;5;130m"[m[35m${*[m[97m[101m:[m[35m5}[m[38;5;130m"[m[14;9Hcat [38;5;130m<<- EOF[m[31m > "[m[35m${OUTPUTDIR}[m[31m/[m[35m${PARAMS_FILE}[m[31m"
-                timestamp: [m[35m${timestamp}[m
-[31m                runner: [m[35m${runner}[m
-[31m                config-file: [m[35m${cfg[m[38;5;130m##[m*/[35m}[m
-[31m                benchmark: [m[35m${benchmark}[m
-[31m                extra: [m[35m${extra}[m
-[38;5;130m        EOF[m
-[36m}
-
-
-function[m [36msnapshot_system_state {[25;9Harchive[m=[38;5;130m"[m[35m${1}[m[38;5;130m"[m[26;9H[36msubdir[m=[38;5;130m"[m[35m${2}[m[38;5;130m"[m[28;9H[34m# create unique namespace to work with[m[29;9H[36mwd[m=[35m$([m[35mmktemp --directory[m[35m)[m[30;9H[38;5;130mmkdir[m [38;5;130m"[m[35m${wd}[m[31m/[m[35m${subdir}[m[38;5;130m"[m[32;9H[34m# snapshot[m[33;9H[38;5;130mfor[m pseudofile [38;5;130min[m [38;5;130m"[m[35m${SYSTEM_STATE_SNAPSHOT_FILES[[m@[35m]}[m[38;5;130m";[m [38;5;130mdo[m[34;17H[36msaveas[m=[38;5;130m"[m[35m$([m[35mbasename [m[38;5;130m"[m[35m${pseudofile}[m[38;5;130m"[m[35m)[m[38;5;130m"[m[35;17Hcat [38;5;130m"[m[35m${pseudofile}[m[38;5;130m"[m [38;5;130m>[m [38;5;130m"[m[35m${wd}[m[31m/[m[35m${subdir}[m[31m/[m[35m${saveas}[m[38;5;130m"[36;9Hdone[m[38;9H[34m# archive[m[39;9Htar [35m--append[m [35m--file=[m[38;5;130m"[m[35m${archive}[m[38;5;130m"[m [35m--directory=[m[38;5;130m"[m[35m${wd}[m[38;5;130m"[m [35m--transform=[m[38;5;130m'[m[31ms,^,sysstate/,[m[38;5;130m'[m [35m--[m [38;5;130m"[m[35m${subdir}[m[38;5;130m"[m[41;9H[34m# clean unique namespace[m[42;9H[38;5;130mrm[m [35m--recursive[m [35m--force[m [35m--[m [38;5;130m"[m[35m${wd}[m[38;5;130m"[m
-[36m}[m
-
-
-[38;5;130mfor[m cfg [38;5;130min[m [38;5;130m"[m[35m$DATADIR[m[38;5;130m"[m/*
-[38;5;130mdo[48;9Hif [m[35m[[[m [35m${cfg}[m [38;5;130m==[m [31m*[m[38;5;130m"[m[31msetpoint[m[38;5;130m"[m[31m*[m [35m]][m[38;5;130m;[m [38;5;130mthen[m[49;17H[36mtimestamp[m=[38;5;130m"[m[35m$([m[35mdate --iso-8601=seconds[m[35m)[m[38;5;130m"[m[50;17H[36marchive[m=[38;5;130m"[m[35m${OUTPUTDIR}[m[31m/preliminaries_[m[35m${BENCHMARK}[m[31m_[m[35m${timestamp}[m[31m.tar[m[38;5;130m"[51;17Hecho[m[31m [m[38;5;130m"[m[31m>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[m[35m${cfg}[m[38;5;130m"[m[52;17Hdump_parameters [38;5;130m"[m[35m${timestamp}[m[38;5;130m"[m [38;5;130m"[m[35m${RUNNER}[m[38;5;130m"[m [38;5;130m"[m[35m${cfg}[m[38;5;130m"[m [38;5;130m"[m[35m${BENCHMARK}[m[38;5;130m"[m [38;5;130m"[m[31m--iterationCount=[m[35m${ITERATION_COUNT}[m[31m --problemSize=[m[35m${PROBLEM_SIZE}[m[38;5;130m"[m[53;17Hlstopo [35m--output-format[m xml [35m--whole-system[m [35m--force[m [38;5;130m"[m[35m${OUTPUTDIR}[m[31m/[m[35m${TOPOLOGY_FILE}[m[38;5;130m"[m[54;17Htar [35m--create[m [35m--file=[m[38;5;130m"[m[35m${archive}[m[38;5;130m"[m [35m--files-from=/dev/null[m[55;17Htar [35m--append[m [35m--file=[m[38;5;130m"[m[35m${archive}[m[38;5;130m"[m [35m--transform=[m[38;5;130m'[m[31ms,^.*/,,[m[38;5;130m'[m [38;5;130m--[m [38;5;130m"[m[35m${cfg}[m[38;5;130m"[m[56;17Htar [35m--append[m [35m--file=[m[38;5;130m"[m[35m${archive}[m[38;5;130m"[m [35m--directory=[m[38;5;130m"[m[35m${OUTPUTDIR}[m[38;5;130m"[m [38;5;130m--[m [38;5;130m"[m[35m${PRERUN_SNAPSHOT_FILES[[m@[35m]}[m[38;5;130m"[m[57;17Hsnapshot_system_state [38;5;130m"[m[35m${archive}[m[38;5;130m"[m [38;5;130m'[m[31mpre[m[38;5;130m'[m[58;17Hpython controller.py [35m${cfg}[m [38;5;130m--[m [35m$APPLICATION[m [35m$PROBLEM_SIZE[m [35m$ITERATION_COUNT[m[59;17H[34m# retrieve benchmark logs and snapshot post-run state[m[60;17Htar [35m--append[m [35m--file=[m[38;5;130m"[m[35m${archive}[m[38;5;130m"[m [35m--directory=[m[38;5;130m"[m[35m${OUTPUTDIR}[m[38;5;130m"[m [38;5;130m--[m [38;5;130m"[m[35m${POSTRUN_SNAPSHOT_FILES[[m@[35m]}[m[38;5;130m"[61;33Htouch[m [38;5;130m"[m[35m${OUTPUTDIR}[m[31m/SUCCESS[m[38;5;130m"[m[62;17Htar [35m--append[m [35m--file=[m[38;5;130m"[m[35m${archive}[m[38;5;130m"[m [35m--directory=[m[38;5;130m"[m[35m${OUTPUTDIR}[m[38;5;130m"[m [38;5;130m--[m SUCCESS[63;17Hsnapshot_system_state [38;5;130m"[m[35m${archive}[m[38;5;130m"[m [38;5;130m'[m[31mpost[m[38;5;130m'[m[64;17H[34m# compress archive[m[65;17Hxz [35m--compress[m [38;5;130m"[m[35m${archive}[m[38;5;130m"[66;17Hsleep[m [31m10[m[67;17Hpython enforce_max_power.py max-range-config.yaml[68;17H[38;5;130mecho[m[31m __________________________________________________________________________________________________[m[69;17H[38;5;130msleep[m [31m10[m[70;9H[38;5;130mfi
-
-done[m[74;253H154,1-8[7CBot[67;8H[?25h[27m[23m[29m[m[H[2J[?25l[1;1H[93mif [[m [93m![m [93m-d[m [93m"[m[38;5;81m$OUTPUTDIR[m[93m"[m [93m];[m [93mthen[2;9Hmkdir[m [93m-p[m [93m"[m[38;5;81m$OUTPUTDIR[m[93m"
-fi[m
-
-[96m# helper functions  -----------------------------------------------------------[m
-
-[1m[96mfunction[m [1m[96mdump_parameters {[m[8;9H[93mdeclare[m [38;5;224m-r[m [1m[96mtimestamp[m=[93m"[m[38;5;81m${1}[m[93m"[9;9Hdeclare[m [38;5;224m-r[m [1m[96mrunner[m=[93m"[m[38;5;81m${2}[m[93m"[10;9Hdeclare[m [38;5;224m-r[m [1m[96mcfg[m=[93m"[m[38;5;81m${3}[m[93m"[11;9Hdeclare[m [38;5;224m-r[m [1m[96mbenchmark[m=[93m"[m[38;5;81m${4}[m[93m"[12;9Hdeclare[m [38;5;224m-r[m [1m[96mextra[m=[93m"[m[38;5;81m${*[m[38;5;231m[101m:[m[38;5;81m5}[m[93m"[m[14;9Hcat [93m<<- EOF[m[95m > "[m[38;5;81m${OUTPUTDIR}[m[95m/[m[38;5;81m${PARAMS_FILE}[m[95m"
-                timestamp: [m[38;5;81m${timestamp}[m
-[95m                runner: [m[38;5;81m${runner}[m
-[95m                config-file: [m[38;5;81m${cfg[m[93m##[m*/[38;5;81m}[m
-[95m                benchmark: [m[38;5;81m${benchmark}[m
-[95m                extra: [m[38;5;81m${extra}[m
-[93m        EOF[m
-[1m[96m}
-
-
-function[m [1m[96msnapshot_system_state {[25;9Harchive[m=[93m"[m[38;5;81m${1}[m[93m"[m[26;9H[1m[96msubdir[m=[93m"[m[38;5;81m${2}[m[93m"[m[28;9H[96m# create unique namespace to work with[m[29;9H[1m[96mwd[m=[38;5;81m$([m[38;5;224mmktemp --directory[m[38;5;81m)[m[30;9H[93mmkdir[m [93m"[m[38;5;81m${wd}[m[95m/[m[38;5;81m${subdir}[m[93m"[m[32;9H[96m# snapshot[m[33;9H[93mfor[m pseudofile [93min[m [93m"[m[38;5;81m${SYSTEM_STATE_SNAPSHOT_FILES[[m@[38;5;81m]}[m[93m";[m [93mdo[m[34;17H[1m[96msaveas[m=[93m"[m[38;5;81m$([m[38;5;224mbasename [m[93m"[m[38;5;81m${pseudofile}[m[93m"[m[38;5;81m)[m[93m"[m[35;17Hcat [93m"[m[38;5;81m${pseudofile}[m[93m"[m [93m>[m [93m"[m[38;5;81m${wd}[m[95m/[m[38;5;81m${subdir}[m[95m/[m[38;5;81m${saveas}[m[93m"[36;9Hdone[m[38;9H[96m# archive[m[39;9Htar [38;5;224m--append[m [38;5;224m--file=[m[93m"[m[38;5;81m${archive}[m[93m"[m [38;5;224m--directory=[m[93m"[m[38;5;81m${wd}[m[93m"[m [38;5;224m--transform=[m[93m'[m[95ms,^,sysstate/,[m[93m'[m [38;5;224m--[m [93m"[m[38;5;81m${subdir}[m[93m"[m[41;9H[96m# clean unique namespace[m[42;9H[93mrm[m [38;5;224m--recursive[m [38;5;224m--force[m [38;5;224m--[m [93m"[m[38;5;81m${wd}[m[93m"[m
-[1m[96m}[m
-
-
-[93mfor[m cfg [93min[m [93m"[m[38;5;81m$DATADIR[m[93m"[m/*
-[93mdo[48;9Hif [m[38;5;224m[[[m [38;5;81m${cfg}[m [93m==[m [95m*[m[93m"[m[95msetpoint[m[93m"[m[95m*[m [38;5;224m]][m[93m;[m [93mthen[m[49;17H[1m[96mtimestamp[m=[93m"[m[38;5;81m$([m[38;5;224mdate --iso-8601=seconds[m[38;5;81m)[m[93m"[m[50;17H[1m[96marchive[m=[93m"[m[38;5;81m${OUTPUTDIR}[m[95m/preliminaries_[m[38;5;81m${BENCHMARK}[m[95m_[m[38;5;81m${timestamp}[m[95m.tar[m[93m"[51;17Hecho[m[95m [m[93m"[m[95m>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[m[38;5;81m${cfg}[m[93m"[m[52;17Hdump_parameters [93m"[m[38;5;81m${timestamp}[m[93m"[m [93m"[m[38;5;81m${RUNNER}[m[93m"[m [93m"[m[38;5;81m${cfg}[m[93m"[m [93m"[m[38;5;81m${BENCHMARK}[m[93m"[m [93m"[m[95m--iterationCount=[m[38;5;81m${ITERATION_COUNT}[m[95m --problemSize=[m[38;5;81m${PROBLEM_SIZE}[m[93m"[m[53;17Hlstopo [38;5;224m--output-format[m xml [38;5;224m--whole-system[m [38;5;224m--force[m [93m"[m[38;5;81m${OUTPUTDIR}[m[95m/[m[38;5;81m${TOPOLOGY_FILE}[m[93m"[m[54;17Htar [38;5;224m--create[m [38;5;224m--file=[m[93m"[m[38;5;81m${archive}[m[93m"[m [38;5;224m--files-from=/dev/null[m[55;17Htar [38;5;224m--append[m [38;5;224m--file=[m[93m"[m[38;5;81m${archive}[m[93m"[m [38;5;224m--transform=[m[93m'[m[95ms,^.*/,,[m[93m'[m [93m--[m [93m"[m[38;5;81m${cfg}[m[93m"[m[56;17Htar [38;5;224m--append[m [38;5;224m--file=[m[93m"[m[38;5;81m${archive}[m[93m"[m [38;5;224m--directory=[m[93m"[m[38;5;81m${OUTPUTDIR}[m[93m"[m [93m--[m [93m"[m[38;5;81m${PRERUN_SNAPSHOT_FILES[[m@[38;5;81m]}[m[93m"[m[57;17Hsnapshot_system_state [93m"[m[38;5;81m${archive}[m[93m"[m [93m'[m[95mpre[m[93m'[m[58;17Hpython controller.py [38;5;81m${cfg}[m [93m--[m [38;5;81m$APPLICATION[m [38;5;81m$PROBLEM_SIZE[m [38;5;81m$ITERATION_COUNT[m[59;17H[96m# retrieve benchmark logs and snapshot post-run state[m[60;17Htar [38;5;224m--append[m [38;5;224m--file=[m[93m"[m[38;5;81m${archive}[m[93m"[m [38;5;224m--directory=[m[93m"[m[38;5;81m${OUTPUTDIR}[m[93m"[m [93m--[m [93m"[m[38;5;81m${POSTRUN_SNAPSHOT_FILES[[m@[38;5;81m]}[m[93m"[61;33Htouch[m [93m"[m[38;5;81m${OUTPUTDIR}[m[95m/SUCCESS[m[93m"[m[62;17Htar [38;5;224m--append[m [38;5;224m--file=[m[93m"[m[38;5;81m${archive}[m[93m"[m [38;5;224m--directory=[m[93m"[m[38;5;81m${OUTPUTDIR}[m[93m"[m [93m--[m SUCCESS[63;17Hsnapshot_system_state [93m"[m[38;5;81m${archive}[m[93m"[m [93m'[m[95mpost[m[93m'[m[64;17H[96m# compress archive[m[65;17Hxz [38;5;224m--compress[m [93m"[m[38;5;81m${archive}[m[93m"[66;17Hsleep[m [95m10[m[67;17Hpython enforce_max_power.py max-range-config.yaml[68;17H[93mecho[m[95m __________________________________________________________________________________________________[m[69;17H[93msleep[m [95m10[m[70;9H[93mfi
-
-done[m[74;253H154,1-8[7CBot"execute_PI_control.sh" 160L, 4527C[67;8H[?25h[?25l[74;243Hi[67;8H[74;243H [67;1H[74;1H[1m-- INSERT --[m[74;13H[K[74;253H154,1[9CBot[67;1H[?25h[?25l[74;255H3[66;1H[?25h[?25l[74;257H2-9[66;9H[?25h[?25l[74;257H3-17[66;17H[?25h[?25l[74;257H4-18[66;18H[?25h[?25l[74;257H5-19[66;19H[?25h[?25l[74;257H6-20[66;20H[?25h[?25l[74;257H7-21[66;21H[?25h[?25l[74;257H8-22[66;22H[?25h[?25l[74;257H9-23[66;23H[?25h[?25l[74;257H10-24[66;24H[?25h[?25l[74;258H1-25[66;25H[?25h[?25l[95m0[m[74;258H2-26[66;26H[?25h[?25l[74;255H4[67;26H[?25h[?25l[74;255H5[68;26H[?25h[?25l[74;255H6,11-25[69;25H[?25h[?25l[74;255H5,12-26[68;26H[?25h[?25l[74;255H4[67;26H[?25h[?25l[74;255H3[66;26H[?25h[?25l[66;25H[K[74;258H1-25[66;25H[?25h[?25l[66;24H[K[74;258H0-24[66;24H[?25h[?25l[66;23H[K[74;257H9-23 [66;23H[?25h[?25l[95m2[m[74;257H10-24[66;24H[?25h[?25l[95m0[m[74;258H1-25[66;25H[?25h[?25l[74;255H4[67;25H[?25h[?25l[74;255H5[68;25H[?25h[?25l[74;255H6[69;25H[?25h[74;1H[K[69;24H[?25l[74;243H^[[69;24H[74;243H  [69;25H[74;253H156,10-24     Bot[69;24H[?25h[?25l[74;243H:[69;24H[74;243H[K[74;1H:[?2004h[?25hWq[?25l[97m[41mE492: Not an editor command: Wq[69;24H[m[74;253H156,10-24     Bot[69;24H[?25h[?25l[74;243H:[69;24H[74;1H[K[74;1H:[?2004h[?25hwq[?25l[?2004l"execute_PI_control.sh" 160L, 4527C written[23;2t[23;1t
-[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m [H[2J
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m ls
-[?2004lGN_RL_model.py  [0m[01;34mPARAMS_backup[0m  [01;34mRESULTS[0m               RL_plot_generator.py  commands       enforce_max_power.py   execute_generate_models.sh  [01;34mexperiment_data[0m    generate_yaml.py   max-range-config.yaml  mylog.log           terminal_output.txt
-[01;34mPARAMS[0m          README.md      RL_data_generator.py  [01;34m__pycache__[0m           [01;32mcontroller.py[0m  execute_PI_control.sh  execute_identification.sh   [01;34mexperiment_inputs[0m  [01;32midentification.py[0m  model_check_env.py     [01;32mstatic-analysis.py[0m  train_multimodels.py
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m ,[Kcd experiment_data/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m ls
-[?2004l[0m[01;34mPI_control[0m  [01;34mRL_controller[0m  [01;34mmodels_all[0m  [01;34mones-npb-ep_identification[0m  [01;34mones-stream-add_identification[0m  [01;34mones-stream-copy_identification[0m  [01;34mones-stream-full_identification[0m  [01;34mones-stream-scale_identification[0m  [01;34mones-stream-triad_identification[0m  sample_params.yaml
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m rm PI_control/[K[K[K[K[K[K[K[K[K[K[K-r PI_control/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m ls
-[?2004l[0m[01;34mRL_controller[0m  [01;34mmodels_all[0m  [01;34mones-npb-ep_identification[0m  [01;34mones-stream-add_identification[0m  [01;34mones-stream-copy_identification[0m  [01;34mones-stream-full_identification[0m  [01;34mones-stream-scale_identification[0m  [01;34mones-stream-triad_identification[0m  sample_params.yaml
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m cd ..
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m ls
-[?2004lGN_RL_model.py  [0m[01;34mPARAMS_backup[0m  [01;34mRESULTS[0m               RL_plot_generator.py  commands       enforce_max_power.py   execute_generate_models.sh  [01;34mexperiment_data[0m    generate_yaml.py   max-range-config.yaml  mylog.log           terminal_output.txt
-[01;34mPARAMS[0m          README.md      RL_data_generator.py  [01;34m__pycache__[0m           [01;32mcontroller.py[0m  execute_PI_control.sh  execute_identification.sh   [01;34mexperiment_inputs[0m  [01;32midentification.py[0m  model_check_env.py     [01;32mstatic-analysis.py[0m  train_multimodels.py
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL]$[0m cd experiment_data/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m ls
-[?2004l[0m[01;34mRL_controller[0m  [01;34mmodels_all[0m  [01;34mones-npb-ep_identification[0m  [01;34mones-stream-add_identification[0m  [01;34mones-stream-copy_identification[0m  [01;34mones-stream-full_identification[0m  [01;34mones-stream-scale_identification[0m  [01;34mones-stream-triad_identification[0m  sample_params.yaml
-[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data]$[0m cd models_all/
-[?2004l[?2004h
-[1;32m[nix-shell:~/GENERALIZED_RL_ANL/experiment_data/models_all]$[0m ls
-[?2004ldynamics_0.0___0.0                                dynamics_10.0___0.0                               dynamics_3.3333333333333335___0.0                 dynamics_5.555555555555555___0.0                 dynamics_7.777777777777779___0.0
-dynamics_0.0___1.1111111111111112                 dynamics_10.0___1.1111111111111112                dynamics_3.3333333333333335___1.1111111111111112  dynamics_5.555555555555555___1.1111111111111112  dynamics_7.777777777777779___1.1111111111111112
-dynamics_0.0___10.0                               dynamics_10.0___10.0                              dynamics_3.3333333333333335___10.0                dynamics_5.555555555555555___10.0                dynamics_7.777777777777779___10.0
-dynamics_0.0___2.2222222222222223                 dynamics_10.0___2.2222222222222223                dynamics_3.3333333333333335___2.2222222222222223  dynamics_5.555555555555555___2.2222222222222223  dynamics_7.777777777777779___2.2222222222222223
-dynamics_0.0___3.3333333333333335                 dynamics_10.0___3.3333333333333335                dynamics_3.3333333333333335___3.3333333333333335  dynamics_5.555555555555555___3.3333333333333335  dynamics_7.777777777777779___3.3333333333333335
-dynamics_0.0___4.444444444444445                  dynamics_10.0___4.444444444444445                 dynamics_3.3333333333333335___4.444444444444445   dynamics_5.555555555555555___4.444444444444445   dynamics_7.777777777777779___4.444444444444445
-dynamics_0.0___5.555555555555555                  dynamics_10.0___5.555555555555555                 dynamics_3.3333333333333335___5.555555555555555   dynamics_5.555555555555555___5.555555555555555   dynamics_7.777777777777779___5.555555555555555
-dynamics_0.0___6.666666666666667                  dynamics_10.0___6.666666666666667                 dynamics_3.3333333333333335___6.666666666666667   dynamics_5.555555555555555___6.666666666666667   dynamics_7.777777777777779___6.666666666666667
-dynamics_0.0___7.777777777777779                  dynamics_10.0___7.777777777777779                 dynamics_3.3333333333333335___7.777777777777779   dynamics_5.555555555555555___7.777777777777779   dynamics_7.777777777777779___7.777777777777779
-dynamics_0.0___8.88888888888889                   dynamics_10.0___8.88888888888889                  dynamics_3.3333333333333335___
