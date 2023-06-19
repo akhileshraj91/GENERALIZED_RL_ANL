@@ -43,7 +43,7 @@ declare -r TOPOLOGY_FILE='topology.xml'
 
 
 if [ ! -d "$OUTPUTDIR" ]; then
-        mkdir -p "$OUTPUTDIR"
+    mkdir -p "$OUTPUTDIR"
 fi
 
 
@@ -140,7 +140,13 @@ do
                 tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
                 snapshot_system_state "${archive}" 'pre'
-                python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
+				if [ "$APPLICATION" == "ones-solvers-cg" ]; then
+		  			python GN_RL_model.py max-range-config.yaml ones-solvers-cg 9000 poor 0 ${cfg}
+                elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
+		  			python GN_RL_model.py max-range-config.yaml ones-solvers-bicgstab 9000 poor 0 ${cfg}
+                else
+                	python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
+				fi
                 # retrieve benchmark logs and snapshot post-run state
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
 		touch "${OUTPUTDIR}/SUCCESS"

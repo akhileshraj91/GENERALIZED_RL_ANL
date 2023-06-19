@@ -31,7 +31,7 @@ APPLICATIONS = []
 
 experiment_dir = './'
 yaml_format = ruamel.yaml.YAML()
-PARAMS_PATH = experiment_dir+"PARAMS_backup/"
+PARAMS_PATH = experiment_dir+"PARAMS/"
 param_files = os.listdir(PARAMS_PATH)
 for file in param_files:
     if 'params' in file:
@@ -53,7 +53,7 @@ print(APPLICATIONS)
 RAPL_SENSOR_FREQ = 1
 
 # maximum number of tries to get extra sensors definitions
-CPD_SENSORS_MAXTRY = 5
+CPD_SENSORS_MAXTRY = 15
 
 
 # logging configuration  ######################################################

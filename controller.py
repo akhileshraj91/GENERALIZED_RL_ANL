@@ -26,7 +26,7 @@ import os
 RAPL_SENSOR_FREQ = 1
 
 # maximum number of tries to get extra sensors definitions
-CPD_SENSORS_MAXTRY = 5
+CPD_SENSORS_MAXTRY = 15
 
 
 # logging configuration  ######################################################

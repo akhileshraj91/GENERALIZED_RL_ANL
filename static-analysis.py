@@ -64,6 +64,7 @@ for cluster in clusters:
         data[cluster][trace]['enforce_powercap'] = data[cluster][trace]['enforce_powercap'].set_index('created')
         data[cluster][trace]['enforce_powercap']['powercap'] = [''.join(c for c in data[cluster][trace]['enforce_powercap']['message'][i] if c.isdigit()) for i in data[cluster][trace]['enforce_powercap'].index]
         # Loading sensors data files
+        print(cluster,trace)
         pubMeasurements = pd.read_csv(folder_path+"/dump_pubMeasurements.csv")
         pubProgress = pd.read_csv(folder_path+"/dump_pubProgress.csv")
          # Extracting sensor data
@@ -243,8 +244,8 @@ for cluster in clusters:
     pcap2perf_model[cluster] = pcap2perf(sc_requested[cluster].index, power_parameters[cluster][0], power_parameters[cluster][1], power2perf_params[cluster][1], power2perf_params[cluster][0], power2perf_params[cluster][2]) # model with optimized perfinf
 
 # plot style
-clusters_styles = {0:'orange',1:'black',2:'skyblue',3:'black',4:'cyan',5:'violet'}
-clusters_markers = {0:'o',1:'x',2:'v',3:'+',4:'.',5:'*'}
+clusters_styles = {0:'orange',1:'black',2:'skyblue',3:'brown',4:'cyan',5:'violet',6:'purple',7:'olive',8:'pink'}
+clusters_markers = {0:'o',1:'x',2:'v',3:'+',4:'.',5:'*',6:',',7:'^',8:'v'}
 plt.rcParams.update({'font.size': 14})
 
 
@@ -278,6 +279,7 @@ for cluster in clusters:
     axes[0].legend(legend,fontsize='x-small',loc='upper right',ncol=1)
 
     # Linear Pcap
+    print(cluster)
     axes[1].plot(-np.exp(-power2perf_params[cluster][0]*(power_parameters[cluster][0]*sc_requested[cluster].index+power_parameters[cluster][1]-power2perf_params[cluster][2])),sc_requested[cluster][elected_performance_sensor]- power2perf_params[cluster][1],color='red', marker=clusters_markers[cluster_num],linestyle='') # data (lin with fixed alpha = 0.04)
     axes[1].plot(-np.exp(-power2perf_params[cluster][0]*(power_parameters[cluster][0]*sc_requested[cluster].index+power_parameters[cluster][1]-power2perf_params[cluster][2])),pcap2perf_model[cluster]-power2perf_params[cluster][1],color='black') # model 0.04
     cluster_num += 1

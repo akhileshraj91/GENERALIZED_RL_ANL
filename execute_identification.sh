@@ -126,9 +126,9 @@ do
 		snapshot_system_state "${archive}" 'pre'
 		echo $APPLICATION
                 if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  python identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_120.yaml ones-solvers-cg 10000 poor 0
+		  python identification.py --enable-libnrm ${cfg} ones-solvers-cg 10000 poor 0
                 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  python identification.py --enable-libnrm ./experiment_inputs/identification_inputs/step_120.yaml ones-solvers-bicgstab 10000 poor 0
+		  python identification.py --enable-libnrm ${cfg} ones-solvers-bicgstab 10000 poor 0
                 else
                   python identification.py --enable-libnrm ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
                 fi
@@ -139,7 +139,7 @@ do
 		xz --compress "${archive}"
 		sleep 10
 		python enforce_max_power.py max-range-config.yaml
-        	sleep 20
+        	sleep 30
 		echo __________________________________________________________________________________________________
 	fi
 
