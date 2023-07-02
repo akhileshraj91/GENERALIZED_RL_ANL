@@ -1,5 +1,0 @@
-timestamp: 2023-06-19T00:43:02+00:00
-runner: 
-config-file: gros_setpoint-97.yaml
-benchmark: stream_c
-extra: --iterationCount=10000 --problemSize=10000

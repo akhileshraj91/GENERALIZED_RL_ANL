@@ -2,12 +2,12 @@ version: 1
 
 rapl:
   slope: 0.94
-  offset: 0.44
+  offset: 0.07
 
 model:
-  alpha: 0.034
-  beta: 30.7
-  gain: 167.8
+  alpha: 0.037
+  beta: 24.3
+  gain: 88.2
   time-constant: 0.33
 
 controller:

@@ -121,12 +121,12 @@ for cluster in clusters:
         for t in range(1,len(data[cluster][trace]['aggregated_values']['upsampled_timestamps'])):
              data[cluster][trace]['aggregated_values']['progress_frequency_median'] = data[cluster][trace]['aggregated_values']['progress_frequency_median'].append({'median':np.nanmedian(data[cluster][trace]['aggregated_values']['performance_frequency']['frequency'].where((data[cluster][trace]['aggregated_values']['performance_frequency'].index>= data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t-1]) & (data[cluster][trace]['aggregated_values']['performance_frequency'].index <=data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]))),'timestamp':data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]}, ignore_index=True)
              if (experiment_type == 'controller') or (experiment_type == 'identification'): 
-                 if (data[cluster][trace]['enforce_powercap'].index[idx]-data[cluster][trace]['first_sensor_point'])<data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]:
+                 if (float(data[cluster][trace]['enforce_powercap'].index[idx])-data[cluster][trace]['first_sensor_point'])<data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]:
                      if idx < len(data[cluster][trace]['enforce_powercap'])-1:           
                          idx = idx +1
-                 if (data[cluster][trace]['enforce_powercap'].index[0]-data[cluster][trace]['first_sensor_point'])>data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]:
+                 if (float(data[cluster][trace]['enforce_powercap'].index[0])-data[cluster][trace]['first_sensor_point'])>data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]:
                     data[cluster][trace]['aggregated_values']['pcap'] = data[cluster][trace]['aggregated_values']['pcap'].append({'pcap':math.nan,'timestamp':data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]}, ignore_index=True)
-                 elif (data[cluster][trace]['enforce_powercap'].index[-1]-data[cluster][trace]['first_sensor_point'])<data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]:
+                 elif (float(data[cluster][trace]['enforce_powercap'].index[-1])-data[cluster][trace]['first_sensor_point'])<data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]:
                      data[cluster][trace]['aggregated_values']['pcap'] = data[cluster][trace]['aggregated_values']['pcap'].append({'pcap':int(data[cluster][trace]['enforce_powercap']['powercap'].iloc[-1]),'timestamp':data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]}, ignore_index=True)
                  else:
                      data[cluster][trace]['aggregated_values']['pcap'] = data[cluster][trace]['aggregated_values']['pcap'].append({'pcap':int(data[cluster][trace]['enforce_powercap']['powercap'].iloc[idx-1]),'timestamp':data[cluster][trace]['aggregated_values']['upsampled_timestamps'][t]}, ignore_index=True)
@@ -147,9 +147,31 @@ for cluster in clusters:
 
 # FIGURE 3
 #print(f"The parameters in the content is {data[cluster][trace]['parameters']}")
+cluster_num_t = 0
+tot_cluster = len(clusters)
+num_rows = int(tot_cluster ** 0.5)
+num_cols = (tot_cluster + num_rows - 1) // num_rows
+fig_P, axes_P = plt.subplots(nrows=num_rows, ncols=num_cols)
+axes_P = axes_P.ravel()
+margin = 0.3937  
+top_margin = 1 * margin / fig_P.get_figheight()
+bottom_margin = 1 * margin / fig_P.get_figheight()
+left_margin = 1 * margin / fig_P.get_figwidth()
+right_margin = 1 * margin / fig_P.get_figwidth()
+
+fig_P.subplots_adjust(
+     top=1-top_margin,
+     bottom=bottom_margin,
+     left=left_margin,
+     right=1-right_margin,
+     hspace=0.25,
+     wspace=0.2
+)
+axes_P[0].set_ylabel('Measured Power [W]')
 for cluster in clusters:
     for my_trace in traces[cluster][0]:
-        x_zoom = [0,100]#[0,len(data[cluster][my_trace]['aggregated_values']['progress_frequency_median']['median'])]
+        x_zoom = [0,200]#[0,len(data[cluster][my_trace]['aggregated_values']['progress_frequency_median']['median'])]
+        y_zoom = [0,200]
         fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(5.7,6.6))
         data[cluster][my_trace]['aggregated_values']['progress_frequency_median']['median'].plot(color='k',ax=axes[0], marker='o', markersize=3,linestyle='')
         axes[0].set_ylabel('Progress [Hz]')
@@ -168,7 +190,37 @@ for cluster in clusters:
         axes[1].grid(True)
         axes[1].set_xlim(x_zoom)
 
-    plt.savefig(f'./RESULTS/fig_3_{cluster}.pdf')
+        # ==========================
+        # PLOT OF MEASURE POWER VS PCAP
+        # ==========================
+
+        # data[cluster][my_trace]['aggregated_values']['progress_frequency_median']['median'].plot(color='k',ax=axes[0], marker='o', markersize=3,linestyle='')
+
+        # axes_P.legend([''],fontsize='small')
+        axes_P[cluster_num_t].set_xlim(x_zoom)
+        axes_P[cluster_num_t].set_ylim(y_zoom)
+        axes_P[cluster_num_t].grid(True)
+        X_DATA = data[cluster][my_trace]['aggregated_values']['pcap']
+        Y_DATA_1 = data[cluster][my_trace]['rapl_sensors']['value0']
+        Y_DATA_2 = data[cluster][my_trace]['rapl_sensors']['value1']
+        Y_DATA_3 = data[cluster][my_trace]['rapl_sensors']['value2']
+        Y_DATA_4 = data[cluster][my_trace]['rapl_sensors']['value3']
+        # data[cluster][my_trace]['aggregated_values']['pcap'].plot(color='k',ax=axes_P, style=".")#, style="+",  markersize=4)
+        # data[cluster][my_trace]['rapl_sensors']['value0'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')#, style="+",  markersize=4)
+        # data[cluster][my_trace]['rapl_sensors']['value1'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')
+        # data[cluster][my_trace]['rapl_sensors']['value2'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')#, style="+",  markersize=4)
+        # data[cluster][my_trace]['rapl_sensors']['value3'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')#, style="+",  markersize=4)
+        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_1,color='red', marker="+", linestyle='', markersize = 2)
+        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_2,color='red', marker="+", linestyle='', markersize = 2)
+        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_3,color='red', marker="+", linestyle='', markersize = 2)
+        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_4,color='red', marker="+", linestyle='', markersize = 2)
+    title = f"{cluster}"
+    axes_P[cluster_num_t].set_title(title,fontsize=5, color = 'blue')
+    fig.savefig(f'./RESULTS/fig_3_{cluster}.pdf')
+    axes_P[cluster_num_t].set_xlabel('PCAP')
+    cluster_num_t += 1
+fig_P.savefig(f'./RESULTS/PCAP_vs_P.pdf')
+
 # =============================================================================
 # STATIC CHARACTERISTIC
 # =============================================================================
@@ -177,7 +229,7 @@ for cluster in clusters:
 
 # init values
 pmin = 40
-pmax = 120
+pmax = 200
 power_parameters0 = [1, 0]                                        
 
 
@@ -210,7 +262,7 @@ power_parameters = {}
 r_squared_power_actuator = {}
 for cluster in clusters:
     # optimized params
-    power_parameters[cluster], power_parameters_cov = opt.curve_fit(powermodel, prequestedvsmeasured[cluster]['pcap_requested'], prequestedvsmeasured[cluster]['rapls'], p0=power_parameters0,maxfev=5000)     # /!\ model computed with package 0
+    power_parameters[cluster], power_parameters_cov = opt.curve_fit(powermodel, prequestedvsmeasured[cluster]['pcap_requested'], prequestedvsmeasured[cluster]['rapls'], p0=power_parameters0)     # maxfev=5000/!\ model computed with package 0
     # Model
     power_model[cluster] = powermodel(prequestedvsmeasured[cluster]['pcap_requested'].loc[pmin:pmax], power_parameters[cluster][0], power_parameters[cluster][1]) # model with fixed alpha
 
@@ -238,7 +290,8 @@ for cluster in clusters:
     # init param
     power2perf_param0 = [0.04, (sc[cluster].at[sc[cluster].index[-1],elected_performance_sensor]+sc[cluster].at[sc[cluster].index[-2],elected_performance_sensor]+sc[cluster].at[sc[cluster].index[-3],elected_performance_sensor])/3, min(sc[cluster].index)]                                        # guessed params
     # Optimization
-    power2perf_param_opt, power2perf_param_cov = opt.curve_fit(power2perf, sc[cluster].index, sc[cluster][elected_performance_sensor], p0=power2perf_param0,maxfev=5000)     
+    # print(cluster)
+    power2perf_param_opt, power2perf_param_cov = opt.curve_fit(power2perf, sc[cluster].index, sc[cluster][elected_performance_sensor], p0=power2perf_param0, maxfev=2000) # add optional parameter maxfev=5000 if the curve is not converging.     
     power2perf_params[cluster] = power2perf_param_opt
     # Model
     pcap2perf_model[cluster] = pcap2perf(sc_requested[cluster].index, power_parameters[cluster][0], power_parameters[cluster][1], power2perf_params[cluster][1], power2perf_params[cluster][0], power2perf_params[cluster][2]) # model with optimized perfinf

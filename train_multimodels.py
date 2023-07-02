@@ -138,8 +138,8 @@ def exec_main(c_0, c_1):  # main function
 if __name__ == "__main__":
     fig, axs = plt.subplots(2)
     fig.suptitle('power and performance against time')
-    C0_vals = np.linspace(0, 10, 10)
-    C1_vals = np.linspace(0, 10, 10)
+    C0_vals = np.linspace(0, 10, 5)
+    C1_vals = np.linspace(0, 10, 5)
     for i in C0_vals:
         for l in C1_vals:
             exec_main(i, l)

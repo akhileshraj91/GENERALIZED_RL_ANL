@@ -13,6 +13,8 @@ import pathlib
 import time
 import typing
 import uuid
+import sched
+
 
 import cerberus
 import ruamel.yaml
@@ -24,7 +26,7 @@ import nrm.tooling as nrm
 RAPL_SENSOR_FREQ = 1
 
 # maximum number of tries to get extra sensors definitions
-CPD_SENSORS_MAXTRY = 5
+CPD_SENSORS_MAXTRY = 25
 
 # maximum time (in second) to wait for a metric read (daemon.upstream_recv)
 METRIC_COLLECTION_TIMEOUT = 0.1
@@ -287,14 +289,18 @@ def dump_upstream_msg(csvwriters, msg):
 def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sleep_duration=0.5):
     """Update in place the list known_sensors, returns the new sensors."""
     assert isinstance(known_sensors, list)
+        
+    print(f'known_sensors={known_sensors}, maxtry={maxtry}')
 
     new_sensors = []
     for _ in range(maxtry):
+        sensors = daemon.req_cpd().sensors()
         new_sensors = [
             sensor
-            for sensor in daemon.req_cpd().sensors()
+            for sensor in sensors
             if sensor not in known_sensors
         ]
+        print(f'sensor={sensors}, new_sensors={new_sensors}')
         if new_sensors:
             break  # new sensors have been retrieved
         time.sleep(sleep_duration)
@@ -304,12 +310,12 @@ def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sle
 
 
 def enforce_powercap(daemon, rapl_actuators, powercap):
-    # for each RAPL actuator, create an action that sets the powercap to powercap
+    # for each RAPL actuator, create an action that sets the powercap to powercap]
     set_pcap_actions = [
         nrm.Action(actuator.actuatorID, powercap)
         for actuator in rapl_actuators
     ]
-
+    # logger.info(f'The variables now are \n {daemon} \n {rapl_actuators} \n {powercap}')
     logger.info(f'set_pcap={powercap}')
     daemon.actuate(set_pcap_actions)
 
@@ -329,86 +335,38 @@ def collect_rapl_actuators(daemon):
     logger.info(f'rapl_actuators={rapl_actuators}')
     return rapl_actuators
 
-
-async def update_powercap(daemon, rapl_actuators, delay, powercap):
-    await asyncio.sleep(delay)
-    enforce_powercap(daemon, rapl_actuators, powercap)
-
-
-async def execute_experiment_plan(plan, daemon, rapl_actuators):
-    rapl_actions = (
-        update_powercap(daemon, rapl_actuators, delay, powercap)
-        for delay, powercap in plan['set_rapl_powercap']
-    )
-    await asyncio.gather(*rapl_actions)
-
-
-async def collect_metrics(daemon, csvwriters):
-    loop = asyncio.get_running_loop()
-    with concurrent.futures.ThreadPoolExecutor() as pool:
+def collect_metrics(daemon, csvwriters, s_plan):
         while not daemon.all_finished():
+            s_plan.run(blocking=False)
             try:
-                msg = await asyncio.wait_for(
-                    loop.run_in_executor(pool, daemon.upstream_recv),
-                    timeout=METRIC_COLLECTION_TIMEOUT
-                )
+                msg = daemon.upstream_recv()
                 dump_upstream_msg(csvwriters, msg)
             except asyncio.TimeoutError:
                 logger.error('metric collection timeout')
 
-    # use `to_thread` with Python 3.9+
-    # while not daemon.all_finished():
-    #     try:
-    #         msg = await asyncio.wait_for(
-    #             asyncio.to_thread(daemon.upstream_recv)
-    #             timeout=METRIC_COLLECTION_TIMEOUT
-    #         )
-    #         dump_upstream_msg(csvwriters, msg)
-    #     except asyncio.TimeoutError:
-    #         pass  # treat timeout
+        if not s_plan.empty():
+            logger.warning('experiment plan partially executed')
 
 
-async def do_daemon_ios(plan, daemon, rapl_actuators, csvwriters):
-    metric_collection_task = asyncio.create_task(
-        # mandatory task as we want to collect metrics as long as the
-        # application is running
-        collect_metrics(daemon, csvwriters),
-        # name='read'
-    )
-    experiment_plan_task = asyncio.create_task(
-        # optional task as it is pointless to change the powercap once the
-        # application finished its execution
-        execute_experiment_plan(plan, daemon, rapl_actuators),
-        # name='write'
-    )
+def plan_to_sched(plan, daemon, rapl_actuators):
+    s = sched.scheduler(time.time, time.sleep)
 
-    # - mandatory_tasks is the set of all tasks we *do* want to wait for
-    # - optional_tasks is the set of tasks that may be cancelled once all tasks
-    #   in mandatory_tasks have finished
-    mandatory_tasks = {metric_collection_task}
-    optional_tasks = {experiment_plan_task}
+    for delay, powercap in plan['set_rapl_powercap']:
+        logger.info(f' rapl actuators give for the scheduler to enforce the power cap is {rapl_actuators}')
+        s.enter(delay, 1, enforce_powercap, argument=(daemon, rapl_actuators, powercap))
 
-    # wait until all tasks of mandatory_tasks have finished
-    alldone, pending = set(), optional_tasks | mandatory_tasks
-    while not alldone.issuperset(mandatory_tasks):
-        done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED)
-        alldone |= done
-
-    # cancel remaining tasks of optional_tasks
-    for task in pending:
-        task.cancel()
-
-    if experiment_plan_task in pending:
-        logger.warning('experiment plan partially executed')
+    return s
 
 
-async def launch_application(plan, daemon_cfg, workload_cfg, *, libnrm, sleep_duration=0.5):
+
+def launch_application(plan, daemon_cfg, workload_cfg, *, sleep_duration=0.5):
     with nrm.nrmd(daemon_cfg) as daemon:
         # collect RAPL actuators
         rapl_actuators = collect_rapl_actuators(daemon)
 
         # collect workload-independent sensors (e.g., RAPL)
         sensors = daemon.req_cpd().sensors()
+        logger.info(f'raple actuators returned after collection = {rapl_actuators}')
         logger.info(f'daemon_sensors={sensors}')
 
         # XXX: trigger actions with time == 0
@@ -417,13 +375,14 @@ async def launch_application(plan, daemon_cfg, workload_cfg, *, libnrm, sleep_du
         logger.info('launch workload')
         daemon.run(**workload_cfg)
 
-        # retrieve definition of extra sensors if required
-        if libnrm:
-            app_sensors = update_sensors_list(daemon, sensors, sleep_duration=sleep_duration)
-            if not app_sensors:
-                logger.critical('failed to get application-specific sensors')
-                raise RuntimeError('Unable to get application-specific sensors')
-            logger.info(f'app_sensors={app_sensors}')
+        # retrieve definition of extra sensors
+        app_sensors = update_sensors_list(daemon, sensors, sleep_duration=sleep_duration)
+        if not app_sensors:
+            logger.critical('failed to get application-specific sensors')
+            raise RuntimeError('Unable to get application-specific sensors')
+        logger.info(f'app_sensors={app_sensors}')
+
+        s_plan = plan_to_sched(plan, daemon, rapl_actuators)
 
         # dump sensors values while waiting for the end of the execution
         with contextlib.ExitStack() as stack:
@@ -432,8 +391,8 @@ async def launch_application(plan, daemon_cfg, workload_cfg, *, libnrm, sleep_du
             # we combine all open context managers thanks to an ExitStack
             csvwriters = initialize_csvwriters(stack)
 
-            await do_daemon_ios(plan, daemon, rapl_actuators, csvwriters)
-
+            s_plan.run(blocking=False)
+            collect_metrics(daemon, csvwriters, s_plan)
 
 # main script  ################################################################
 
@@ -485,7 +444,11 @@ def run(options, cmd):
         'args': cmd[1:],
         'sliceID': 'sliceID',  # XXX: bug in pynrm/hnrm if missing or None (should be generated?)
         'manifest': {
-            'app': {},
+            'app': {# configure libnrm instrumentation
+                'instrumentation': {
+                    'ratelimit': {'hertz': 100_000_000},
+                },
+            },
         },
     }
     # NB: if we want to keep the output of the launched command when run in
@@ -503,20 +466,18 @@ def run(options, cmd):
     # )
 
     # configure libnrm instrumentation if required
-    if options.libnrm:
-        workload_cfg['manifest']['app']['instrumentation'] = {
-            'ratelimit': {'hertz': 100_000_000},
-        }
+    # if options.libnrm:
+    #     workload_cfg['manifest']['app']['instrumentation'] = {
+    #         'ratelimit': {'hertz': 100_000_000},
+    #     }
 
     logger.info(f'daemon_cfg={daemon_cfg}')
     logger.info(f'workload_cfg={workload_cfg}')
-    asyncio.run(
-        launch_application(
-            options.plan,
-            daemon_cfg,
-            workload_cfg,
-            libnrm=options.libnrm,
-        )
+    launch_application(
+        options.plan,
+        daemon_cfg,
+        workload_cfg,
+        # libnrm=options.libnrm,
     )
     logger.info('successful execution')
 
@@ -526,3 +487,4 @@ if __name__ == '__main__':
     WORKLOAD = cmd[0]
     LOGS_CONF, logger = logs_conf_func()
     run(options, cmd)
+

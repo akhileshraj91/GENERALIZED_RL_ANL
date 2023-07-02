@@ -1,3 +1,0 @@
-version: 1
-actions:
-  - {time: 0, action: 'set_rapl_powercap', args: [90]}

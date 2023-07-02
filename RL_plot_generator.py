@@ -33,7 +33,7 @@ APPLICATIONS = []
 experiment_dir = './'
 OUTPUT_DIR = './RESULTS/'
 yaml_format = ruamel.yaml.YAML()
-PARAMS_PATH = experiment_dir+"PARAMS_backup/"
+PARAMS_PATH = experiment_dir+"PARAMS/"
 param_files = os.listdir(PARAMS_PATH)
 for file in param_files:
     if 'params' in file:
@@ -59,15 +59,15 @@ num_cols = (num_subplots + num_rows - 1) // num_rows
 
 colors = sns.color_palette("colorblind", num_subplots)
 
-fig, axes = plt.subplots(nrows=num_rows, ncols=num_cols)
-axes = axes.ravel()
+fig_pareto, axes_pareto = plt.subplots(nrows=num_rows, ncols=num_cols)
+axes_pareto = axes_pareto.ravel()
 margin = 0.3937  
-top_margin = 1 * margin / fig.get_figheight()
-bottom_margin = 1 * margin / fig.get_figheight()
-left_margin = 1 * margin / fig.get_figwidth()
-right_margin = 1 * margin / fig.get_figwidth()
+top_margin = 1 * margin / fig_pareto.get_figheight()
+bottom_margin = 1 * margin / fig_pareto.get_figheight()
+left_margin = 1 * margin / fig_pareto.get_figwidth()
+right_margin = 1 * margin / fig_pareto.get_figwidth()
 
-fig.subplots_adjust(
+fig_pareto.subplots_adjust(
      top=1-top_margin,
      bottom=bottom_margin,
      left=left_margin,
@@ -75,8 +75,7 @@ fig.subplots_adjust(
      hspace=0.25,
      wspace=0.2
 )
-# print("--",axes)
-# print(fig,axes)
+
 
 EX_DIRS = [item for item in next(os.walk('./experiment_data/'))[1] if 'control' in item]
 print(EX_DIRS)
@@ -88,10 +87,8 @@ for ex in EX_DIRS:
      for cluster in clusters:
           print(cluster)
           k = APPLICATIONS.index(cluster)
-          # print(experiment_dir+'/'+cluster)
           data,traces = RLDG.generate_data(experiment_dir,cluster)
           pareto = {}
-          # fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(6.6,6.6))
 
           for trace in traces[cluster][0]:
                data[cluster][trace]['aggregated_values']['energy'] = np.nansum([np.nansum([data[cluster][trace]['rapl_sensors']['value'+str(package_number)].iloc[i+1]*data[cluster][trace]['aggregated_values']['rapls_periods'].iloc[i][0] for i in range(0,len(data[cluster][trace]['aggregated_values']['rapls_periods'].index))]) for package_number in range(0,4)])
@@ -113,30 +110,23 @@ for ex in EX_DIRS:
           execution_time_power = pareto[cluster].index*pareto[cluster]['Execution Time']
      
           cmap = cm.get_cmap('viridis')
-          cb = axes[k].scatter(pareto[cluster].index,pareto[cluster]['Execution Time'], marker='.', color=col, s=30, label=f'{ex}')
+          cb = axes_pareto[k].scatter(pareto[cluster].index,pareto[cluster]['Execution Time'], marker='.', color=col, s=30, label=f'{ex}')
           x_data = pareto[cluster].index
           y_data = pareto[cluster]['Execution Time']
           z_data = pareto[cluster]['Labels'].iloc()
-          # print(x_data)
-          # print(y_data)
-          # print(z_data)
-          # print(len(x_data),len(y_data),len(z_data))
+          EDP_values = x_data*y_data
 
-          # fig2,axes2 = plt.subplots(nrows=1,ncols=1,figsize=(6.6,6.6))
           for i,data in enumerate(zip(x_data,y_data)):
-               # axes.plot(data[0],data[1])
-               axes[k].text(data[0]+0.03,data[1]+0.03,z_data[i],fontsize=2)
+               axes_pareto[k].text(data[0]+0.03,data[1]+0.03,z_data[i],fontsize=2)
 
-          axes[k].grid(True)
-          axes[k].set_ylabel('Execution time [s]',fontsize = 3.5)
-          axes[k].set_xlabel('Energy consumption [kJ]', fontsize = 3.5)
-          axes[k].tick_params(axis='x', labelsize=4)
-          axes[k].tick_params(axis='y', labelsize=4)
-          axes[k].legend(fontsize = 3)
-          # title = "Comparing RL and PI controller with varying reward fucntions and varying setpoints."
+          axes_pareto[k].grid(True)
+          axes_pareto[k].set_ylabel('Execution time [s]',fontsize = 3.5)
+          axes_pareto[k].set_xlabel('Energy consumption [kJ]', fontsize = 3.5)
+          axes_pareto[k].tick_params(axis='x', labelsize=4)
+          axes_pareto[k].tick_params(axis='y', labelsize=4)
+          axes_pareto[k].legend(fontsize = 3)
           title = f"{cluster}"
-          axes[k].set_title(title,fontsize=5, color = 'blue')
-          # axes[k].hold(True)
+          axes_pareto[k].set_title(title, fontsize=5, color = 'blue')
      ##########################################################################################################################
 
 
@@ -144,7 +134,7 @@ for ex in EX_DIRS:
 
 
 
-     fig.savefig(OUTPUT_DIR+"result_"+str(now)+".pdf")
+     fig_pareto.savefig(OUTPUT_DIR+"result_"+str(now)+".pdf")
      # plt.savefig("./figures_normal/result_"+str(now)+".png")
 
 

@@ -4,6 +4,11 @@
 export LC_ALL=C  # ensure we are working with known locales
 #set -e -u -f -o pipefail # safer shell script
 
+# bind OMP threads always
+export OMP_PLACES=threads
+#export OMP_PROC_BIND=true
+#export OMP_NUM_THREADS=24
+
 declare -r PROGRAM=${0##*/}
 declare -r ITERATION_COUNT=10000
 # declare -r PROBLEM_SIZE='33_554_432'
@@ -15,13 +20,13 @@ else
 fi
 
 if [ "$APPLICATION" == "ones-npb-ep" ]; then
-  declare -r PROBLEM_SIZE=22
+  declare -r PROBLEM_SIZE=28
 elif [ "$APPLICATION" == "ones-solvers-cg" ]; then
-  declare -r PROBLEM_SIZE=10000
+  declare -r PROBLEM_SIZE=20000
 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-  declare -r PROBLEM_SIZE=10000
+  declare -r PROBLEM_SIZE=20000
 else
-  declare -r PROBLEM_SIZE=33554432
+  declare -r PROBLEM_SIZE=67108864
 fi
 
 
@@ -110,12 +115,7 @@ for cfg in "$DATADIR"/*
 do
 	#if grep -q "step" ${cfg}; then
 	if [[ ${cfg} == *"step"* ]]; then
-	#	echo "sasi"
-	#else
-	#	echo "pakad"
-	#fi
 		timestamp="$(date --iso-8601=seconds)"
-        	#archive="${OUTPUTDIR}/preliminaries_${BENCHMARK}_${timestamp}.tar"
 		archive="${OUTPUTDIR}/preliminaries_${BENCHMARK}_${timestamp}.tar"
         	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${cfg}"
 		dump_parameters "${timestamp}" "${RUNNER}" "${cfg}" "${BENCHMARK}" "--iterationCount=${ITERATION_COUNT} --problemSize=${PROBLEM_SIZE}"
@@ -126,21 +126,21 @@ do
 		snapshot_system_state "${archive}" 'pre'
 		echo $APPLICATION
                 if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  python identification.py --enable-libnrm ${cfg} ones-solvers-cg 10000 poor 0
+		  python identification.py ${cfg} ones-solvers-cg 20000 poor 0
                 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  python identification.py --enable-libnrm ${cfg} ones-solvers-bicgstab 10000 poor 0
+		  python identification.py ${cfg} ones-solvers-bicgstab 20000 poor 0
                 else
-                  python identification.py --enable-libnrm ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
+                  python identification.py ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
+
                 fi
-		# retrieve benchmark logs and snapshot post-run state
 		tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
 		snapshot_system_state "${archive}" 'post'
-		# compress archive
 		xz --compress "${archive}"
-		sleep 10
-		python enforce_max_power.py max-range-config.yaml
-        	sleep 30
+		# sleep 10
+		# python enforce_max_power.py max-range-config.yaml
+        	# sleep 30
 		echo __________________________________________________________________________________________________
 	fi
 
 done
+

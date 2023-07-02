@@ -450,6 +450,6 @@
   <support name="membind.get_area_memlocation"/>
   <support name="custom.exported_support"/>
   <cpukind cpuset="0x0000ffff,0xffffffff">
-    <info name="FrequencyBaseMHz" value="1900"/>
+    <info name="FrequencyBaseMHz" value="2600"/>
   </cpukind>
 </topology>

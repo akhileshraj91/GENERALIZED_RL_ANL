@@ -1,16 +1,26 @@
 version: 1
 
 rapl:
-  slope: 0.66
-  offset: 18.38
+<<<<<<< HEAD
+  slope: 0.69
+  offset: 11.47
 
 model:
-  alpha: 0.012
-  beta: 31.9
-  gain: 130.5
+  alpha: 0.005
+  beta: 28.4
+  gain: 257.5
+=======
+  slope: 0.73
+  offset: 11.32
+
+model:
+  alpha: 0.0
+  beta: 28.7
+  gain: 363937.5
+>>>>>>> 161ef3e00c5b59821e9fee3b6214d24dd81be629
   time-constant: 0.33
 
 controller:
-  setpoint: 1.0
+  setpoint: 0.53
   response-time: 30
   power-range: [40, 200]
