@@ -20,13 +20,13 @@ else
 fi
 
 if [ "$APPLICATION" == "ones-npb-ep" ]; then
-  declare -r PROBLEM_SIZE=28
+  declare -r PROBLEM_SIZE=22
 elif [ "$APPLICATION" == "ones-solvers-cg" ]; then
-  declare -r PROBLEM_SIZE=20000
+  declare -r PROBLEM_SIZE=5000
 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-  declare -r PROBLEM_SIZE=20000
+  declare -r PROBLEM_SIZE=5000
 else
-  declare -r PROBLEM_SIZE=67108864
+  declare -r PROBLEM_SIZE=33554432
 fi
 
 
@@ -126,9 +126,9 @@ do
 		snapshot_system_state "${archive}" 'pre'
 		echo $APPLICATION
                 if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  python identification.py ${cfg} ones-solvers-cg 20000 poor 0
+		  python identification.py ${cfg} ones-solvers-cg 5000 poor 0
                 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  python identification.py ${cfg} ones-solvers-bicgstab 20000 poor 0
+		  python identification.py ${cfg} ones-solvers-bicgstab 5000 poor 0
                 else
                   python identification.py ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
 

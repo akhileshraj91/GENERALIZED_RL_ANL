@@ -1,3 +1,0 @@
-msg.timestamp,msg.id,msg.type,sensor.timestamp,sensor.id,sensor.value
-1687288506.562796,01eecd42-09f2-40af-abc1-85f149fa6648,pubMeasurements,1687288506.562796,RaplKey (PackageID 1),127.48005929107377
-1687288506.562796,01eecd42-09f2-40af-abc1-85f149fa6648,pubMeasurements,1687288506.562796,RaplKey (PackageID 0),127.75567628281999

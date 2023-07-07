@@ -290,7 +290,7 @@ def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sle
     """Update in place the list known_sensors, returns the new sensors."""
     assert isinstance(known_sensors, list)
         
-    print(f'known_sensors={known_sensors}, maxtry={maxtry}')
+    #print(f'known_sensors={known_sensors}, maxtry={maxtry}')
 
     new_sensors = []
     for _ in range(maxtry):
@@ -300,7 +300,7 @@ def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sle
             for sensor in sensors
             if sensor not in known_sensors
         ]
-        print(f'sensor={sensors}, new_sensors={new_sensors}')
+        #print(f'sensor={sensors}, new_sensors={new_sensors}')
         if new_sensors:
             break  # new sensors have been retrieved
         time.sleep(sleep_duration)
@@ -340,6 +340,7 @@ def collect_metrics(daemon, csvwriters, s_plan):
             s_plan.run(blocking=False)
             try:
                 msg = daemon.upstream_recv()
+                logger.info(f"The recieved messages are {msg}")
                 dump_upstream_msg(csvwriters, msg)
             except asyncio.TimeoutError:
                 logger.error('metric collection timeout')

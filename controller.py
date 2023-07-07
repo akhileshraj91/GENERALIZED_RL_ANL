@@ -26,7 +26,7 @@ import os
 RAPL_SENSOR_FREQ = 1
 
 # maximum number of tries to get extra sensors definitions
-CPD_SENSORS_MAXTRY = 15
+CPD_SENSORS_MAXTRY = 25
 
 
 # logging configuration  ######################################################
@@ -375,9 +375,11 @@ class PIController:
         # print(self.daemon,self.daemon.all_finished())
         while not self.daemon.all_finished():
             msg = self.daemon.upstream_recv()  # blocking call
+            # logger.info(f"The recieved messages on the control side are {msg}")
             dump_upstream_msg(csvwriters, msg)
             (msg_type, payload), = msg.items()  # single-key dict destructuring
             # dispatch to relevant logic
+            print(f"____________,{msg}")
             if msg_type == 'pubProgress':
                 self._update_progress(payload)
             elif msg_type == 'pubMeasurements':
@@ -386,6 +388,7 @@ class PIController:
     def _update_progress(self, payload):
         timestamp, _, value = payload
         timestamp *= 1e-6  # convert µs in s
+        print(self.heartbeat_timestamps)
         self.heartbeat_timestamps.append((timestamp,value))
         #self.heartbeat_timestamps.append(timestamp)
 
@@ -397,17 +400,25 @@ class PIController:
             #for first, second in zip(heartbeat_timestamps, heartbeat_timestamps[1:])
         #)
         #print(heartbeat_timestamps)
+        # logger.info(f"The heartbeat_timestamps are: {heartbeat_timestamps}")
         return statistics.median(((second[1])/ (second[0] - first[0]))
             for first, second in zip(heartbeat_timestamps, heartbeat_timestamps[1:]))
 
     def _update_measure(self, payload):
         timestamp, measures = payload
         timestamp *= 1e-6  # convert µs in s
+        # logger.info(f"measures : {measures}")
+        # logger.info(f"each measure is {[da['sensorID'] for da in measures]}")
         for data in measures:
+            # print(data,data['sensorID'])
             if data['sensorID'].startswith('RaplKey'):
+                # print("_____________________________________")
+                # print(self.heartbeat_timestamps)
                 # collect sensors
                 window_duration = timestamp - self.rapl_window_timestamp
                 progress_estimation = self._estimate_progress(self.heartbeat_timestamps)
+                # logger.info(f"The heartbeat_timestamps in update measure are: {self.heartbeat_timestamps}")
+
 
                 # estimate current error
                 error = self.progress_setpoint - progress_estimation
@@ -452,6 +463,7 @@ class PIController:
 def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sleep_duration=0.5):
     """Update in place the list known_sensors, returns the new sensors."""
     assert isinstance(known_sensors, list)
+    print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{known_sensors}")
 
     new_sensors = []
     for _ in range(maxtry):
@@ -463,6 +475,8 @@ def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sle
         if new_sensors:
             break  # new sensors have been retrieved
         time.sleep(sleep_duration)
+
+    print(f"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{new_sensors}")
 
     known_sensors.extend(new_sensors)  # extend known_sensors in place
     return new_sensors

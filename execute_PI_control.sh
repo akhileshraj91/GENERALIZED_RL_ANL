@@ -28,9 +28,9 @@ fi
 if [ "$APPLICATION" == "ones-npb-ep" ]; then
   declare -r PROBLEM_SIZE=22
 elif [ "$APPLICATION" == "ones-solvers-cg" ]; then
-  declare -r PROBLEM_SIZE=10000
+  declare -r PROBLEM_SIZE=5000
 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-  declare -r PROBLEM_SIZE=10000
+  declare -r PROBLEM_SIZE=5000
 else
   declare -r PROBLEM_SIZE=33554432
 fi
@@ -135,35 +135,34 @@ function snapshot_system_state {
 
 for cfg in "$DATADIR"/*
 do
-        if [[ ${cfg} == *"setpoint"* ]]; then
-                timestamp="$(date --iso-8601=seconds)"
-                archive="${OUTPUTDIR}/preliminaries_${BENCHMARK}_${timestamp}.tar"
-                echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${cfg}"
-                dump_parameters "${timestamp}" "${RUNNER}" "${cfg}" "${BENCHMARK}" "--iterationCount=${ITERATION_COUNT} --problemSize=${PROBLEM_SIZE}"
-                lstopo --output-format xml --whole-system --force "${OUTPUTDIR}/${TOPOLOGY_FILE}"
-                tar --create --file="${archive}" --files-from=/dev/null
-                tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
-                tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
-                snapshot_system_state "${archive}" 'pre'
-				if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  			python controller.py ${cfg} ones-solvers-cg 9000 poor 0
-                elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  			python controller.py ${cfg} ones-solvers-bicgstab 9000 poor 0
-                else
-                	python controller.py ${cfg} -- $APPLICATION $PROBLEM_SIZE $ITERATION_COUNT
-				fi
-                # retrieve benchmark logs and snapshot post-run state
-                tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
-				touch "${OUTPUTDIR}/SUCCESS"
-                tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- SUCCESS
-                snapshot_system_state "${archive}" 'post'
-                # compress archive
-                xz --compress "${archive}"
-		sleep 20
-		python enforce_max_power.py max-range-config.yaml
-		echo __________________________________________________________________________________________________
-		sleep 10
-        fi
-
+	if [[ ${cfg} == *"setpoint"* ]]; then
+			timestamp="$(date --iso-8601=seconds)"
+			archive="${OUTPUTDIR}/preliminaries_${BENCHMARK}_${timestamp}.tar"
+			echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${cfg}"
+			dump_parameters "${timestamp}" "${RUNNER}" "${cfg}" "${BENCHMARK}" "--iterationCount=${ITERATION_COUNT} --problemSize=${PROBLEM_SIZE}"
+			lstopo --output-format xml --whole-system --force "${OUTPUTDIR}/${TOPOLOGY_FILE}"
+			tar --create --file="${archive}" --files-from=/dev/null
+			tar --append --file="${archive}" --transform='s,^.*/,,' -- "${cfg}"
+			tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
+			snapshot_system_state "${archive}" 'pre'
+			if [ "$APPLICATION" == "ones-solvers-cg" ]; then
+				python controller.py ${cfg} ones-solvers-cg 5000 poor 0
+			elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
+				python controller.py ${cfg} ones-solvers-bicgstab 5000 poor 0
+			else
+				python controller.py ${cfg} -- $APPLICATION $PROBLEM_SIZE $ITERATION_COUNT
+			fi
+			# retrieve benchmark logs and snapshot post-run state
+			tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
+			touch "${OUTPUTDIR}/SUCCESS"
+			tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- SUCCESS
+			snapshot_system_state "${archive}" 'post'
+			# compress archive
+			xz --compress "${archive}"
+	sleep 20
+	python enforce_max_power.py max-range-config.yaml
+	echo __________________________________________________________________________________________________
+	sleep 10
+	fi
 done
 

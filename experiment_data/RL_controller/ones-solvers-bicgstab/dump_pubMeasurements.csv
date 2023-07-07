@@ -1,4 +1,0 @@
-msg.timestamp,msg.id,msg.type,sensor.timestamp,sensor.id,sensor.value
-1687143137.2990444,299872c3-1add-48c5-a701-505a5a5003df,pubMeasurements,1687143137.2990444,"DownstreamThreadKey (DownstreamThreadID {cmdID = CmdID 4c48e6f1-0e4c-11ee-8001-246e966291c6, processID = ProcessID {rawPid = 1321917}, taskID = TaskID {fromTaskID = ""ones-solvers-bicgstab""}, threadID = ThreadID 0, rankID = RankID {fromRankID = 0}})",13.192264056357352
-1687143137.4352903,96dbdf67-1fac-4626-b682-92b257f558a7,pubMeasurements,1687143137.4352903,RaplKey (PackageID 1),74.8082897640177
-1687143137.4352903,96dbdf67-1fac-4626-b682-92b257f558a7,pubMeasurements,1687143137.4352903,RaplKey (PackageID 0),60.430993885658765

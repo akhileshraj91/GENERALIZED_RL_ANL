@@ -1,1 +1,0 @@
-msg.timestamp,msg.id,msg.type,sensor.cmd,sensor.task,sensor.rank,sensor.pid,sensor.tid,sensor.value
