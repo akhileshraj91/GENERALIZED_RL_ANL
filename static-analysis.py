@@ -168,10 +168,14 @@ fig_P.subplots_adjust(
      wspace=0.2
 )
 axes_P[0].set_ylabel('Measured Power [W]')
+axes_P[4].set_ylabel('Measured Power [W]')
+x_zoom = [0,150]
+y_zoom = [0,150]
 for cluster in clusters:
+    axes_P[cluster_num_t].set_xlim(x_zoom)
+    axes_P[cluster_num_t].set_ylim(y_zoom)
+    axes_P[cluster_num_t].grid(True)
     for my_trace in traces[cluster][0]:
-        x_zoom = [0,200]#[0,len(data[cluster][my_trace]['aggregated_values']['progress_frequency_median']['median'])]
-        y_zoom = [0,200]
         fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(5.7,6.6))
         data[cluster][my_trace]['aggregated_values']['progress_frequency_median']['median'].plot(color='k',ax=axes[0], marker='o', markersize=3,linestyle='')
         axes[0].set_ylabel('Progress [Hz]')
@@ -197,27 +201,17 @@ for cluster in clusters:
         # data[cluster][my_trace]['aggregated_values']['progress_frequency_median']['median'].plot(color='k',ax=axes[0], marker='o', markersize=3,linestyle='')
 
         # axes_P.legend([''],fontsize='small')
-        axes_P[cluster_num_t].set_xlim(x_zoom)
-        axes_P[cluster_num_t].set_ylim(y_zoom)
-        axes_P[cluster_num_t].grid(True)
         X_DATA = data[cluster][my_trace]['aggregated_values']['pcap']
-        Y_DATA_1 = data[cluster][my_trace]['rapl_sensors']['value0']
-        Y_DATA_2 = data[cluster][my_trace]['rapl_sensors']['value1']
-        Y_DATA_3 = data[cluster][my_trace]['rapl_sensors']['value2']
-        Y_DATA_4 = data[cluster][my_trace]['rapl_sensors']['value3']
-        # data[cluster][my_trace]['aggregated_values']['pcap'].plot(color='k',ax=axes_P, style=".")#, style="+",  markersize=4)
-        # data[cluster][my_trace]['rapl_sensors']['value0'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')#, style="+",  markersize=4)
-        # data[cluster][my_trace]['rapl_sensors']['value1'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')
-        # data[cluster][my_trace]['rapl_sensors']['value2'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')#, style="+",  markersize=4)
-        # data[cluster][my_trace]['rapl_sensors']['value3'].plot(x=X_DATA,color='lightcoral',ax=axes_P, marker="+", linestyle='')#, style="+",  markersize=4)
-        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_1,color='red', marker="+", linestyle='', markersize = 2)
-        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_2,color='red', marker="+", linestyle='', markersize = 2)
-        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_3,color='red', marker="+", linestyle='', markersize = 2)
-        axes_P[cluster_num_t].plot(X_DATA,Y_DATA_4,color='red', marker="+", linestyle='', markersize = 2)
+        X_AVG = X_DATA.mean(axis=0)
+        Y_DATA = data[cluster][my_trace]['rapl_sensors'].mean(axis=0)
+        Y_AVG = Y_DATA.iloc[1:].mean(axis=0)
+        axes_P[cluster_num_t].plot(X_AVG,Y_AVG,color='red', marker="+", linestyle='', markersize = 2)
     title = f"{cluster}"
     axes_P[cluster_num_t].set_title(title,fontsize=5, color = 'blue')
     fig.savefig(f'./RESULTS/fig_3_{cluster}.pdf')
     axes_P[cluster_num_t].set_xlabel('PCAP')
+    axes_P[cluster_num_t].tick_params(labelsize=4)
+    axes_P[cluster_num_t].tick_params(labelsize=4)
     cluster_num_t += 1
 fig_P.savefig(f'./RESULTS/PCAP_vs_P.pdf')
 
