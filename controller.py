@@ -379,7 +379,7 @@ class PIController:
             dump_upstream_msg(csvwriters, msg)
             (msg_type, payload), = msg.items()  # single-key dict destructuring
             # dispatch to relevant logic
-            print(f"____________,{msg}")
+            # print(f"____________,{msg}")
             if msg_type == 'pubProgress':
                 self._update_progress(payload)
             elif msg_type == 'pubMeasurements':
@@ -388,7 +388,7 @@ class PIController:
     def _update_progress(self, payload):
         timestamp, _, value = payload
         timestamp *= 1e-6  # convert µs in s
-        print(self.heartbeat_timestamps)
+        # print(self.heartbeat_timestamps)
         self.heartbeat_timestamps.append((timestamp,value))
         #self.heartbeat_timestamps.append(timestamp)
 
@@ -463,7 +463,7 @@ class PIController:
 def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sleep_duration=0.5):
     """Update in place the list known_sensors, returns the new sensors."""
     assert isinstance(known_sensors, list)
-    print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{known_sensors}")
+    # print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{known_sensors}")
 
     new_sensors = []
     for _ in range(maxtry):
@@ -476,7 +476,7 @@ def update_sensors_list(daemon, known_sensors, *, maxtry=CPD_SENSORS_MAXTRY, sle
             break  # new sensors have been retrieved
         time.sleep(sleep_duration)
 
-    print(f"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{new_sensors}")
+    # print(f"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{new_sensors}")
 
     known_sensors.extend(new_sensors)  # extend known_sensors in place
     return new_sensors

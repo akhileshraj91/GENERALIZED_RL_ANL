@@ -37,14 +37,14 @@ for file in param_files:
             K_L[name] = parameters['model']['gain']
             files.close()
 
-
+# print(APPLICATIONS)
 TOTAL_WL = len(APPLICATIONS)
 T_S = 1
 exec_steps = 10000                                                                                                      # Total clock cycles needed for the execution of program.
 ACTION_MIN = 40                                                                                                         # Minima of control space (power cap), Please do not change while using mathematical model for simulations.
 ACTION_MAX = 200                                                                                                        # Maxima of control space
 ACT_MID = ACTION_MIN + (ACTION_MAX - ACTION_MIN) / 2                                                                    # Midpoint of the control space to compute the normalized action space
-OBS_MAX = 250                                                                                                           # Maxima of observation space (performance)
+OBS_MAX = 300                                                                                                           # Maxima of observation space (performance)
 OBS_MIN = 0                                                                                                             # Minima of observation space
 OBS_MID = OBS_MIN + (OBS_MAX - OBS_MIN) / 2
 
@@ -58,6 +58,7 @@ def progress_funct(state, p_cap):                                               
     p_now = state[0]
     cluster = APPLICATIONS[state[1]]
     # print(cluster)
+    measured_power = a[cluster] * p_cap + b[cluster]
     pcap_old_L = -np.exp(-alpha[cluster] * (a[cluster] * p_cap + b[cluster] - beta[cluster]))                           # Calculation of the PCAP for fitting it into the model.
     progress_value = K_L[cluster] * T_S / (T_S + tau) * pcap_old_L + tau / (T_S + tau) * (p_now - K_L[cluster]) + \
                      K_L[cluster]                                                                                       # Mathematical relation
@@ -67,7 +68,7 @@ def progress_funct(state, p_cap):                                               
     # print(return_list)
     # print(np.array(return_list))
     # return progress_value, progress_NL
-    return return_list,progress_NL
+    return return_list,progress_NL,measured_power
 
 def normal_obs(o):
     return (o - OBS_MIN) / (OBS_MAX - OBS_MIN)
@@ -97,7 +98,7 @@ class Dynamical_Sys(Env):
         actual_action = abnormal_action(action)
         # print("action is:", action)
         # print("action converted is:", actual_action)
-        new_state, add_on = progress_funct(actual_state, actual_action)
+        new_state, add_on, measured_power = progress_funct(actual_state, actual_action)
         # normalized_new_state = normal_obs(new_state[0])
         self.state = np.array(new_state)
         # self.action = action[0]
@@ -105,7 +106,7 @@ class Dynamical_Sys(Env):
         if new_state[0] > 0:
             self.current_step += new_state[0]
             reward_0 = -self.c_0 * self.action
-            reward_1 = self.c_1 * self.state[0] / self.action
+            reward_1 = self.c_1 * self.state[0] / measured_power
             reward = (reward_0 + reward_1)[0]
 
         else:

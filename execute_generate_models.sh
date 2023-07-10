@@ -141,9 +141,9 @@ do
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
                 snapshot_system_state "${archive}" 'pre'
 				if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  			python GN_RL_model.py max-range-config.yaml ones-solvers-cg 9000 poor 0 ${cfg}
+		  			python GN_RL_model.py max-range-config.yaml ones-solvers-cg 5000 poor 0 ${cfg}
                 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  			python GN_RL_model.py max-range-config.yaml ones-solvers-bicgstab 9000 poor 0 ${cfg}
+		  			python GN_RL_model.py max-range-config.yaml ones-solvers-bicgstab 5000 poor 0 ${cfg}
                 else
                 	python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
 				fi

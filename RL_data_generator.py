@@ -191,21 +191,6 @@ def generate_data(experiment_dir,cluster):
             folder_path = f"{experiment_dir}{cluster}/{trace}"
             shutil.rmtree(folder_path)
 
-<<<<<<< HEAD
-
-
-
-    # # Parameters found using static Characteristic
-    # a = {'gros': 0.83, 'dahu': 0.94, 'yeti': 0.89}
-    # b = {'gros': 7.07, 'dahu': 0.17, 'yeti': 2.91}
-    # alpha = {'gros': 0.047, 'dahu': 0.032, 'yeti': 0.023}
-    # beta = {'gros': 28.5, 'dahu': 34.8, 'yeti': 33.7}
-    # K_L = {'gros': 25.6, 'dahu': 42.4, 'yeti': 78.5}
-    # # analytically found parameter
-    # tau = 0.33
-=======
->>>>>>> 161ef3e00c5b59821e9fee3b6214d24dd81be629
-
     pareto = {}
 
     for trace in traces[cluster][0]:

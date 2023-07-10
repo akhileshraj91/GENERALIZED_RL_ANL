@@ -298,43 +298,52 @@ plt.rcParams.update({'font.size': 14})
 
 
 legend = []
+fig, axes = plt.subplots(nrows = num_rows, ncols=num_cols)
+axes = axes.ravel()
+margin = 0.3937  
+top_margin = 0.5 * margin / fig.get_figheight()
+bottom_margin = 1 * margin / fig.get_figheight()
+left_margin = 1 * margin / fig.get_figwidth()
+right_margin = 0.5 * margin / fig.get_figwidth()
+
+fig.subplots_adjust(
+    top=1-top_margin,
+    bottom=bottom_margin,
+    left=left_margin,
+    right=1-right_margin,
+    hspace=0.25,
+    wspace=0.3
+)
+
+cluster_num_t = 0
 for cluster in clusters:
-    fig, axes = plt.subplots(nrows = 2, ncols=1, figsize=(6.6,6.6))
-    margin = 0.3937  
-    top_margin = 1 * margin / fig.get_figheight()
-    bottom_margin = 1.5 * margin / fig.get_figheight()
-    left_margin = 2.5 * margin / fig.get_figwidth()
-    right_margin = 1 * margin / fig.get_figwidth()
-
-    fig.subplots_adjust(
-        top=1-top_margin,
-        bottom=bottom_margin,
-        left=left_margin,
-        right=1-right_margin,
-        hspace=0.3,
-        wspace=0.4
-    )
-
-    sc_requested[cluster][elected_performance_sensor].plot(ax=axes[0],color='red',marker='*',linestyle='') # pcap vs measured progress
-    axes[0].plot(sc_requested[cluster].index,pcap2perf_model[cluster],color='black') # pcap vs. modelled progress
-    axes[0].grid(True)
-    axes[0].set_ylabel('Progress [Hz]')
-    axes[0].set_xlabel('Powercap [W]')
-    axes[0].set_ylim([0,250])
-    legend += ['cluster: '+' - measures']
-    legend += ['cluster: '+' - model']
-    axes[0].legend(legend,fontsize='x-small',loc='upper right',ncol=1)
-
+    sc_requested[cluster][elected_performance_sensor].plot(ax=axes[cluster_num_t],color='red',marker='.',linestyle='') # pcap vs measured progress
+    axes[cluster_num_t].plot(sc_requested[cluster].index,pcap2perf_model[cluster],color='black') # pcap vs. modelled progress
+    axes[cluster_num_t].grid(True)
+    # if cluster_num_t == 0 | cluster_num_t == 4:
+    axes[cluster_num_t].set_ylabel('Progress [Hz]',fontsize=4)
+    axes[cluster_num_t].set_xlabel('Powercap [W]',fontsize=4)
+    axes[cluster_num_t].set_ylim([0,250])
+    legend += [' - measures']
+    legend += [' - model']
+    axes[cluster_num_t].legend(legend,fontsize=4,loc='upper right',ncol=1)
+    # axes[cluster_num_t].set_xlabel('Powercap[W]')
+    axes[cluster_num_t].tick_params(labelsize=4)
+    axes[cluster_num_t].tick_params(labelsize=4)
+    title = f"{cluster}"
+    axes[cluster_num_t].set_title(title,fontsize=5, color = 'blue')
     # Linear Pcap
-    print(cluster)
-    axes[1].plot(-np.exp(-power2perf_params[cluster][0]*(power_parameters[cluster][0]*sc_requested[cluster].index+power_parameters[cluster][1]-power2perf_params[cluster][2])),sc_requested[cluster][elected_performance_sensor]- power2perf_params[cluster][1],color='red', marker=clusters_markers[cluster_num],linestyle='') # data (lin with fixed alpha = 0.04)
-    axes[1].plot(-np.exp(-power2perf_params[cluster][0]*(power_parameters[cluster][0]*sc_requested[cluster].index+power_parameters[cluster][1]-power2perf_params[cluster][2])),pcap2perf_model[cluster]-power2perf_params[cluster][1],color='black') # model 0.04
-    cluster_num += 1
-    axes[1].grid(True)
-    axes[1].set_ylabel('Linearized Progress [Hz]')
-    axes[1].set_xlabel('Linearized Powercap [unitless]')
-    axes[1].legend(legend,fontsize='x-small',loc='lower right',ncol=1)
-    fig.savefig(f'./RESULTS/4ab_{cluster}.pdf')
+    # print(cluster)
+    # axes[1].plot(-np.exp(-power2perf_params[cluster][0]*(power_parameters[cluster][0]*sc_requested[cluster].index+power_parameters[cluster][1]-power2perf_params[cluster][2])),sc_requested[cluster][elected_performance_sensor]- power2perf_params[cluster][1],color='red', marker=clusters_markers[cluster_num],linestyle='') # data (lin with fixed alpha = 0.04)
+    # axes[1].plot(-np.exp(-power2perf_params[cluster][0]*(power_parameters[cluster][0]*sc_requested[cluster].index+power_parameters[cluster][1]-power2perf_params[cluster][2])),pcap2perf_model[cluster]-power2perf_params[cluster][1],color='black') # model 0.04
+    # cluster_num += 1
+    # axes[1].grid(True)
+    # axes[1].set_ylabel('Linearized Progress [Hz]')
+    # axes[1].set_xlabel('Linearized Powercap [unitless]')
+    # axes[1].legend(legend,fontsize='x-small',loc='lower right',ncol=1)
+    cluster_num_t+=1
+# axes[tot_cluster-1].legend(loc='lower center', bbox_to_anchor=(0.5, -0.05), ncol=2)
+fig.savefig(f'./RESULTS/all_BENCHMARKS.pdf')
 
 print("We are now going to print the tables.")
 # Table 2
