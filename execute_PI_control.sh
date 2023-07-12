@@ -28,9 +28,9 @@ fi
 if [ "$APPLICATION" == "ones-npb-ep" ]; then
   declare -r PROBLEM_SIZE=22
 elif [ "$APPLICATION" == "ones-solvers-cg" ]; then
-  declare -r PROBLEM_SIZE=5000
+  declare -r PROBLEM_SIZE=10000
 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-  declare -r PROBLEM_SIZE=5000
+  declare -r PROBLEM_SIZE=10000
 else
   declare -r PROBLEM_SIZE=33554432
 fi
@@ -146,9 +146,9 @@ do
 			tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
 			snapshot_system_state "${archive}" 'pre'
 			if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-				python controller.py ${cfg} ones-solvers-cg 5000 poor 0
+				python controller.py ${cfg} ones-solvers-cg 10000 poor 0 10000
 			elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-				python controller.py ${cfg} ones-solvers-bicgstab 5000 poor 0
+				python controller.py ${cfg} ones-solvers-bicgstab 20000 poor 0 10000
 			else
 				python controller.py ${cfg} -- $APPLICATION $PROBLEM_SIZE $ITERATION_COUNT
 			fi
@@ -162,7 +162,6 @@ do
 	sleep 20
 	python enforce_max_power.py max-range-config.yaml
 	echo __________________________________________________________________________________________________
-	sleep 10
+	sleep 20
 	fi
 done
-

@@ -53,7 +53,7 @@ print(APPLICATIONS)
 RAPL_SENSOR_FREQ = 1
 
 # maximum number of tries to get extra sensors definitions
-CPD_SENSORS_MAXTRY = 15
+CPD_SENSORS_MAXTRY = 25
 
 
 # logging configuration  ######################################################
@@ -352,15 +352,22 @@ class PIController:
     def control(self, csvwriters, model_file):
         self.dynamics = model_file
         self.model = PPO.load(self.dynamics)
+        flag = 0
+        # print("_______________________")
         while not self.daemon.all_finished():
             msg = self.daemon.upstream_recv()  # blocking call
             dump_upstream_msg(csvwriters, msg)
             (msg_type, payload), = msg.items()  # single-key dict destructuring
             # dispatch to relevant logic
-            if msg_type == 'pubProgress':
+            print(len(payload))
+            if msg_type == 'pubProgress' and len(payload)>1:
                 self._update_progress(payload)
-            elif msg_type == 'pubMeasurements':
+                flag = 1
+            elif msg_type == 'pubMeasurements' and flag == 1:
                 self._update_measure(payload)
+            else:
+                print("continuing")
+                continue
 
     def _update_progress(self, payload):
         timestamp, _, value = payload
@@ -370,6 +377,7 @@ class PIController:
     @staticmethod
     def _estimate_progress(heartbeat_timestamps):
         """Estimate the heartbeats' frequency given a list of heartbeats' timestamps."""
+        print(">>>>>>>>>",heartbeat_timestamps)
         return statistics.median(((second[1])/ (second[0] - first[0])) for first, second in zip(heartbeat_timestamps, heartbeat_timestamps[1:]))
 
     def _update_measure(self, payload):
@@ -377,7 +385,7 @@ class PIController:
         timestamp *= 1e-6  # convert µs in s
         for data in measures:
             if data['sensorID'].startswith('RaplKey'):
-                window_duration = timestamp - self.rapl_window_timestamp
+                # window_duration = timestamp - self.rapl_window_timestamp
                 progress_estimation = self._estimate_progress(self.heartbeat_timestamps)
                 # print(progress_estimation,INDEX)
                 obs = [progress_estimation, INDEX]
@@ -385,13 +393,13 @@ class PIController:
                 ab_action = ncna.abnormal_action(action)
                 powercap = ab_action[0]
                 #print(">>>>>>>>>>>>>>>>>>>>>>>>>>>",powercap)
-                self.powercap_linear = max(
-                    min(
-                        self.powercap_linear,
-                        self._powercap_linear_max
-                    ),
-                    self._powercap_linear_min
-                )
+                # self.powercap_linear = max(
+                #     min(
+                #         self.powercap_linear,
+                #         self._powercap_linear_max
+                #     ),
+                #     self._powercap_linear_min
+                # )
 
                 self.rapl_window_timestamp = timestamp
                 self.heartbeat_timestamps = self.heartbeat_timestamps[-1:]

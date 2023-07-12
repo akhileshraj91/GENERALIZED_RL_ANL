@@ -323,7 +323,7 @@ for cluster in clusters:
     # if cluster_num_t == 0 | cluster_num_t == 4:
     axes[cluster_num_t].set_ylabel('Progress [Hz]',fontsize=4)
     axes[cluster_num_t].set_xlabel('Powercap [W]',fontsize=4)
-    axes[cluster_num_t].set_ylim([0,250])
+    axes[cluster_num_t].set_ylim([0,800])
     legend += [' - measures']
     legend += [' - model']
     axes[cluster_num_t].legend(legend,fontsize=4,loc='upper right',ncol=1)

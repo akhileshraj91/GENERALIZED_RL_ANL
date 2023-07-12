@@ -1,11 +1,11 @@
-bash execute_generate_models.sh
-bash execute_generate_models.sh ones-stream-copy
-bash execute_generate_models.sh ones-stream-add
-bash execute_generate_models.sh ones-stream-triad
-bash execute_generate_models.sh ones-stream-scale
-bash execute_generate_models.sh ones-npb-ep
+# bash execute_generate_models.sh
+# bash execute_generate_models.sh ones-stream-copy
+# bash execute_generate_models.sh ones-stream-add
+# bash execute_generate_models.sh ones-stream-triad
+# bash execute_generate_models.sh ones-stream-scale
+# bash execute_generate_models.sh ones-npb-ep
 bash execute_generate_models.sh ones-solvers-cg
-bash execute_generate_models.sh ones-solvers-bicgstab
+# bash execute_generate_models.sh ones-solvers-bicgstab
 
 
 # bash execute_identification.sh
@@ -25,6 +25,6 @@ bash execute_generate_models.sh ones-solvers-bicgstab
 # bash execute_PI_control.sh ones-stream-scale
 # bash execute_PI_control.sh ones-npb-ep
 # bash execute_PI_control.sh ones-solvers-cg
-# bash execute_PI_control.sh ones-solvers-bicgstab
+bash execute_PI_control.sh ones-solvers-bicgstab
 
 

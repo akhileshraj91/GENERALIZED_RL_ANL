@@ -44,7 +44,7 @@ exec_steps = 10000                                                              
 ACTION_MIN = 40                                                                                                         # Minima of control space (power cap), Please do not change while using mathematical model for simulations.
 ACTION_MAX = 200                                                                                                        # Maxima of control space
 ACT_MID = ACTION_MIN + (ACTION_MAX - ACTION_MIN) / 2                                                                    # Midpoint of the control space to compute the normalized action space
-OBS_MAX = 300                                                                                                           # Maxima of observation space (performance)
+OBS_MAX = 250                                                                                                           # Maxima of observation space (performance)
 OBS_MIN = 0                                                                                                             # Minima of observation space
 OBS_MID = OBS_MIN + (OBS_MAX - OBS_MIN) / 2
 
@@ -132,6 +132,34 @@ class Dynamical_Sys(Env):
 def exec_main(c_0, c_1):  # main function
     env = Dynamical_Sys(exec_steps, c_0=c_0,c_1=c_1)
     model = PPO("MlpPolicy", env, verbose=1)
+
+    # Access the optimizer for the actor network
+    actor_optimizer = model.policy.optimizer
+    print(actor_optimizer)
+
+    # Retrieve the learning rate for the actor network
+    actor_learning_rate = actor_optimizer.param_groups[0]['lr']
+    print("Learning rate for the actor network:", actor_learning_rate)
+
+    # # Access the optimizer for the critic network
+    # critic_optimizer = model.policy.value_net.optimizer
+
+    # # Retrieve the learning rate for the critic network
+    # critic_learning_rate = critic_optimizer.param_groups[0]['lr']
+    # print("Learning rate for the critic network:", critic_learning_rate)
+
+    # policy_parameters = model.policy.parameters()
+
+    # Count the number of layers in the policy network
+    # num_layers = sum(1 for _ in policy_parameters)
+    # print(f"{[neurons.shape[0] for neurons in policy_parameters]}")
+    # print("Number of layers in the policy network:", num_layers)
+    # value_parameters = model.policy.value_net.parameters()
+
+    # Count the number of layers in the value network
+    # num_layers = sum(1 for _ in value_parameters)
+    # print("Number of layers in the value network:", num_layers)
+
     model.learn(total_timesteps=15000)
     model.save("./experiment_data/models_" + str("all") + "/dynamics_" + str(c_0) + "___" + str(c_1))
 

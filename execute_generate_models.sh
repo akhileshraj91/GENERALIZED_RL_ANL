@@ -141,9 +141,9 @@ do
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
                 snapshot_system_state "${archive}" 'pre'
 				if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  			python GN_RL_model.py max-range-config.yaml ones-solvers-cg 5000 poor 0 ${cfg}
+		  			python GN_RL_model.py max-range-config.yaml ones-solvers-cg 10000 poor 0 10000 ${cfg}
                 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  			python GN_RL_model.py max-range-config.yaml ones-solvers-bicgstab 5000 poor 0 ${cfg}
+		  			python GN_RL_model.py max-range-config.yaml ones-solvers-bicgstab 20000 poor 0 10000 ${cfg}
                 else
                 	python GN_RL_model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
 				fi
@@ -154,10 +154,10 @@ do
                 snapshot_system_state "${archive}" 'post'
                 # compress archive
                 xz --compress "${archive}"
-		sleep 10
+		sleep 20
 	        python enforce_max_power.py max-range-config.yaml
                 echo __________________________________________________________________________________________________
-		sleep 10
+		sleep 20
         fi
 
 done

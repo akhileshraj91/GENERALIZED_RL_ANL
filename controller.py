@@ -373,6 +373,7 @@ class PIController:
 
     def control(self, csvwriters):
         # print(self.daemon,self.daemon.all_finished())
+        flag = 0
         while not self.daemon.all_finished():
             msg = self.daemon.upstream_recv()  # blocking call
             # logger.info(f"The recieved messages on the control side are {msg}")
@@ -380,10 +381,13 @@ class PIController:
             (msg_type, payload), = msg.items()  # single-key dict destructuring
             # dispatch to relevant logic
             # print(f"____________,{msg}")
-            if msg_type == 'pubProgress':
+            if msg_type == 'pubProgress' and len(payload) > 1:
                 self._update_progress(payload)
-            elif msg_type == 'pubMeasurements':
+                flag = 1
+            elif msg_type == 'pubMeasurements' and flag == 1:
                 self._update_measure(payload)
+            else:
+                continue
 
     def _update_progress(self, payload):
         timestamp, _, value = payload
@@ -399,7 +403,7 @@ class PIController:
             #1 / (second - first)
             #for first, second in zip(heartbeat_timestamps, heartbeat_timestamps[1:])
         #)
-        #print(heartbeat_timestamps)
+        # print(heartbeat_timestamps)
         # logger.info(f"The heartbeat_timestamps are: {heartbeat_timestamps}")
         return statistics.median(((second[1])/ (second[0] - first[0]))
             for first, second in zip(heartbeat_timestamps, heartbeat_timestamps[1:]))

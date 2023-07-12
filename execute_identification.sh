@@ -126,9 +126,9 @@ do
 		snapshot_system_state "${archive}" 'pre'
 		echo $APPLICATION
                 if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  python identification.py ${cfg} ones-solvers-cg 10000 poor 0
+		  python identification.py ${cfg} ones-solvers-cg 10000 poor 0 10000
                 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  python identification.py ${cfg} ones-solvers-bicgstab 10000 poor 0
+		  python identification.py ${cfg} ones-solvers-bicgstab 20000 poor 0 10000
                 else
                   python identification.py ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
 
