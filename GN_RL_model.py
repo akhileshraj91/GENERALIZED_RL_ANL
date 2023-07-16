@@ -359,11 +359,10 @@ class PIController:
             dump_upstream_msg(csvwriters, msg)
             (msg_type, payload), = msg.items()  # single-key dict destructuring
             # dispatch to relevant logic
-            print(len(payload))
-            if msg_type == 'pubProgress' and len(payload)>1:
+            #print(len(payload))
+            if msg_type == 'pubProgress':
                 self._update_progress(payload)
-                flag = 1
-            elif msg_type == 'pubMeasurements' and flag == 1:
+            elif msg_type == 'pubMeasurements':
                 self._update_measure(payload)
             else:
                 print("continuing")
@@ -377,8 +376,11 @@ class PIController:
     @staticmethod
     def _estimate_progress(heartbeat_timestamps):
         """Estimate the heartbeats' frequency given a list of heartbeats' timestamps."""
-        print(">>>>>>>>>",heartbeat_timestamps)
-        return statistics.median(((second[1])/ (second[0] - first[0])) for first, second in zip(heartbeat_timestamps, heartbeat_timestamps[1:]))
+        #print(">>>>>>>>>",heartbeat_timestamps)
+        if len(heartbeat_timestamps) > 1:
+            return statistics.median(((second[1])/ (second[0] - first[0])) for first, second in zip(heartbeat_timestamps, heartbeat_timestamps[1:]))
+        else:
+            return 0
 
     def _update_measure(self, payload):
         timestamp, measures = payload
@@ -566,6 +568,6 @@ if __name__ == '__main__':
     options, cmd = cli()
     WORKLOAD = cmd[0]
     INDEX = APPLICATIONS.index(WORKLOAD)
-    print(INDEX,WORKLOAD)
+    #print(INDEX,WORKLOAD)
     LOGS_CONF, logger = logs_conf_func()
     run(options, cmd)

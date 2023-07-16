@@ -12,15 +12,15 @@
     <info name="DMIChassisVersion" value=""/>
     <info name="DMIChassisAssetTag" value=""/>
     <info name="DMIBIOSVendor" value="Dell Inc."/>
-    <info name="DMIBIOSVersion" value="2.2.11"/>
-    <info name="DMIBIOSDate" value="06/13/2019"/>
+    <info name="DMIBIOSVersion" value="1.4.9"/>
+    <info name="DMIBIOSDate" value="06/29/2018"/>
     <info name="DMISysVendor" value="Dell Inc."/>
     <info name="Backend" value="Linux"/>
     <info name="LinuxCgroup" value="/"/>
     <info name="OSName" value="Linux"/>
-    <info name="OSRelease" value="5.4.0-152-generic"/>
-    <info name="OSVersion" value="#169-Ubuntu SMP Tue Jun 6 22:23:09 UTC 2023"/>
-    <info name="HostName" value="tacc-debug"/>
+    <info name="OSRelease" value="5.4.0-153-generic"/>
+    <info name="OSVersion" value="#170-Ubuntu SMP Fri Jun 16 13:43:31 UTC 2023"/>
+    <info name="HostName" value="akhilesh-raj-bulk-3"/>
     <info name="Architecture" value="x86_64"/>
     <info name="hwlocVersion" value="2.7.1"/>
     <info name="ProcessName" value="lstopo"/>
@@ -30,8 +30,8 @@
       <info name="CPUModelNumber" value="85"/>
       <info name="CPUModel" value="Intel(R) Xeon(R) Gold 6126 CPU @ 2.60GHz"/>
       <info name="CPUStepping" value="4"/>
-      <object type="NUMANode" os_index="0" cpuset="0x00555555" complete_cpuset="0x00555555" nodeset="0x00000001" complete_nodeset="0x00000001" gp_index="126" local_memory="99774611456">
-        <page_type size="4096" count="24359036"/>
+      <object type="NUMANode" os_index="0" cpuset="0x00555555" complete_cpuset="0x00555555" nodeset="0x00000001" complete_nodeset="0x00000001" gp_index="126" local_memory="99838746624">
+        <page_type size="4096" count="24374694"/>
         <page_type size="2097152" count="0"/>
         <page_type size="1073741824" count="0"/>
       </object>
@@ -183,36 +183,36 @@
         </object>
       </object>
       <object type="Bridge" gp_index="143" bridge_type="0-1" depth="0" bridge_pci="0000:[00-03]">
-        <object type="PCIDev" gp_index="133" pci_busid="0000:00:11.5" pci_type="0106 [8086:a1d2] [1028:0715] 09" pci_link_speed="0.000000"/>
-        <object type="PCIDev" gp_index="130" pci_busid="0000:00:17.0" pci_type="0106 [8086:a182] [1028:0715] 09" pci_link_speed="0.000000"/>
-        <object type="Bridge" gp_index="131" bridge_type="1-1" depth="1" bridge_pci="0000:[01-01]" pci_busid="0000:00:1c.0" pci_type="0604 [8086:a190] [1028:0715] f9" pci_link_speed="1.230769">
-          <object type="PCIDev" gp_index="137" pci_busid="0000:01:00.0" pci_type="0200 [8086:1521] [1028:1f9a] 01" pci_link_speed="1.230769">
-            <object type="OSDev" gp_index="149" name="eth0" osdev_type="2">
-              <info name="Address" value="24:6e:96:62:af:40"/>
+        <object type="PCIDev" gp_index="132" pci_busid="0000:00:11.5" pci_type="0106 [8086:a1d2] [1028:0715] 09" pci_link_speed="0.000000"/>
+        <object type="PCIDev" gp_index="129" pci_busid="0000:00:17.0" pci_type="0106 [8086:a182] [1028:0715] 09" pci_link_speed="0.000000"/>
+        <object type="Bridge" gp_index="130" bridge_type="1-1" depth="1" bridge_pci="0000:[01-01]" pci_busid="0000:00:1c.0" pci_type="0604 [8086:a190] [1028:0715] f9" pci_link_speed="1.230769">
+          <object type="PCIDev" gp_index="135" pci_busid="0000:01:00.0" pci_type="0200 [8086:1521] [1028:1f9a] 01" pci_link_speed="1.230769">
+            <object type="OSDev" gp_index="150" name="eth2" osdev_type="2">
+              <info name="Address" value="24:6e:96:7e:00:ec"/>
             </object>
           </object>
-          <object type="PCIDev" gp_index="140" pci_busid="0000:01:00.1" pci_type="0200 [8086:1521] [1028:1f9a] 01" pci_link_speed="1.230769">
-            <object type="OSDev" gp_index="147" name="eth1" osdev_type="2">
-              <info name="Address" value="24:6e:96:62:af:41"/>
+          <object type="PCIDev" gp_index="139" pci_busid="0000:01:00.1" pci_type="0200 [8086:1521] [1028:1f9a] 01" pci_link_speed="1.230769">
+            <object type="OSDev" gp_index="148" name="eth3" osdev_type="2">
+              <info name="Address" value="24:6e:96:7e:00:ed"/>
             </object>
           </object>
         </object>
-        <object type="Bridge" gp_index="141" bridge_type="1-1" depth="1" bridge_pci="0000:[02-03]" pci_busid="0000:00:1c.4" pci_type="0604 [8086:a194] [1028:0715] f9" pci_link_speed="0.615385">
-          <object type="Bridge" gp_index="135" bridge_type="1-1" depth="2" bridge_pci="0000:[03-03]" pci_busid="0000:02:00.0" pci_type="0604 [1556:be00] [0000:0000] 02" pci_link_speed="0.615385">
+        <object type="Bridge" gp_index="140" bridge_type="1-1" depth="1" bridge_pci="0000:[02-03]" pci_busid="0000:00:1c.4" pci_type="0604 [8086:a194] [1028:0715] f9" pci_link_speed="0.615385">
+          <object type="Bridge" gp_index="134" bridge_type="1-1" depth="2" bridge_pci="0000:[03-03]" pci_busid="0000:02:00.0" pci_type="0604 [1556:be00] [0000:0000] 02" pci_link_speed="0.615385">
             <object type="PCIDev" gp_index="128" pci_busid="0000:03:00.0" pci_type="0300 [102b:0536] [1028:0715] 04" pci_link_speed="0.000000"/>
           </object>
         </object>
       </object>
       <object type="Bridge" gp_index="144" bridge_type="0-1" depth="0" bridge_pci="0000:[17-18]">
-        <object type="Bridge" gp_index="132" bridge_type="1-1" depth="1" bridge_pci="0000:[18-18]" pci_busid="0000:17:02.0" pci_type="0604 [8086:2032] [8086:0000] 04" pci_link_speed="7.876923">
-          <object type="PCIDev" gp_index="139" pci_busid="0000:18:00.0" pci_type="0200 [8086:1572] [1028:1f99] 01" pci_link_speed="7.876923">
-            <object type="OSDev" gp_index="148" name="eth2" osdev_type="2">
-              <info name="Address" value="24:6e:96:62:af:20"/>
+        <object type="Bridge" gp_index="131" bridge_type="1-1" depth="1" bridge_pci="0000:[18-18]" pci_busid="0000:17:02.0" pci_type="0604 [8086:2032] [8086:0000] 04" pci_link_speed="7.876923">
+          <object type="PCIDev" gp_index="137" pci_busid="0000:18:00.0" pci_type="0200 [8086:1572] [1028:1f99] 01" pci_link_speed="7.876923">
+            <object type="OSDev" gp_index="147" name="eth0" osdev_type="2">
+              <info name="Address" value="24:6e:96:7e:00:cc"/>
             </object>
           </object>
           <object type="PCIDev" gp_index="142" pci_busid="0000:18:00.1" pci_type="0200 [8086:1572] [1028:0000] 01" pci_link_speed="7.876923">
-            <object type="OSDev" gp_index="150" name="eth3" osdev_type="2">
-              <info name="Address" value="24:6e:96:62:af:22"/>
+            <object type="OSDev" gp_index="149" name="eth1" osdev_type="2">
+              <info name="Address" value="24:6e:96:7e:00:ce"/>
             </object>
           </object>
         </object>
@@ -224,8 +224,8 @@
       <info name="CPUModelNumber" value="85"/>
       <info name="CPUModel" value="Intel(R) Xeon(R) Gold 6126 CPU @ 2.60GHz"/>
       <info name="CPUStepping" value="4"/>
-      <object type="NUMANode" os_index="1" cpuset="0x00aaaaaa" complete_cpuset="0x00aaaaaa" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="127" local_memory="101422391296">
-        <page_type size="4096" count="24761326"/>
+      <object type="NUMANode" os_index="1" cpuset="0x00aaaaaa" complete_cpuset="0x00aaaaaa" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="127" local_memory="101464981504">
+        <page_type size="4096" count="24771724"/>
         <page_type size="2097152" count="0"/>
         <page_type size="1073741824" count="0"/>
       </object>
@@ -291,13 +291,13 @@
             </object>
           </object>
         </object>
-        <object type="L2Cache" os_index="30" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="65" cache_size="1048576" depth="2" cache_linesize="64" cache_associativity="16" cache_type="0">
+        <object type="L2Cache" os_index="20" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="65" cache_size="1048576" depth="2" cache_linesize="64" cache_associativity="16" cache_type="0">
           <info name="Inclusive" value="0"/>
-          <object type="L1Cache" os_index="30" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="63" cache_size="32768" depth="1" cache_linesize="64" cache_associativity="8" cache_type="1">
+          <object type="L1Cache" os_index="20" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="63" cache_size="32768" depth="1" cache_linesize="64" cache_associativity="8" cache_type="1">
             <info name="Inclusive" value="0"/>
-            <object type="L1iCache" os_index="30" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="64" cache_size="32768" depth="1" cache_linesize="64" cache_associativity="8" cache_type="2">
+            <object type="L1iCache" os_index="20" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="64" cache_size="32768" depth="1" cache_linesize="64" cache_associativity="8" cache_type="2">
               <info name="Inclusive" value="0"/>
-              <object type="Core" os_index="14" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="61">
+              <object type="Core" os_index="4" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="61">
                 <object type="PU" os_index="11" cpuset="0x00000800" complete_cpuset="0x00000800" nodeset="0x00000002" complete_nodeset="0x00000002" gp_index="62"/>
               </object>
             </object>
@@ -376,17 +376,17 @@
           </object>
         </object>
       </object>
-      <object type="Bridge" gp_index="145" bridge_type="0-1" depth="0" bridge_pci="0000:[ae-af]">
-        <object type="Bridge" gp_index="136" bridge_type="1-1" depth="1" bridge_pci="0000:[af-af]" pci_busid="0000:ae:00.0" pci_type="0604 [8086:2030] [8086:0000] 04" pci_link_speed="7.876923">
-          <info name="PCISlot" value="4"/>
-          <object type="PCIDev" gp_index="129" pci_busid="0000:af:00.0" pci_type="0104 [1000:005f] [1028:1f44] 02" pci_link_speed="7.876923">
+      <object type="Bridge" gp_index="145" bridge_type="0-1" depth="0" bridge_pci="0000:[85-86]">
+        <object type="Bridge" gp_index="141" bridge_type="1-1" depth="1" bridge_pci="0000:[86-86]" pci_busid="0000:85:00.0" pci_type="0604 [8086:2030] [8086:0000] 04" pci_link_speed="7.876923">
+          <info name="PCISlot" value="5"/>
+          <object type="PCIDev" gp_index="138" pci_busid="0000:86:00.0" pci_type="0104 [1000:005f] [1028:1f44] 02" pci_link_speed="7.876923">
             <object type="OSDev" gp_index="146" name="sda" subtype="Disk" osdev_type="0">
               <info name="Size" value="234431064"/>
               <info name="SectorSize" value="512"/>
               <info name="LinuxDeviceID" value="8:0"/>
               <info name="Model" value="MZ7KM240HMHQ0D3"/>
-              <info name="Revision" value="GD57"/>
-              <info name="SerialNumber" value="5002538c4065cf24"/>
+              <info name="Revision" value="GD53"/>
+              <info name="SerialNumber" value="5002538c407781f6"/>
             </object>
           </object>
         </object>
@@ -426,6 +426,6 @@
   <support name="membind.get_area_memlocation"/>
   <support name="custom.exported_support"/>
   <cpukind cpuset="0x00ffffff">
-    <info name="FrequencyMaxMHz" value="3700"/>
+    <info name="FrequencyBaseMHz" value="1400"/>
   </cpukind>
 </topology>

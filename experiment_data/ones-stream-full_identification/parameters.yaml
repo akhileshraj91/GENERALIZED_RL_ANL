@@ -1,5 +1,5 @@
-timestamp: 2023-07-09T05:40:12+00:00
+timestamp: 2023-07-13T21:26:02+00:00
 runner: identification
-config-file: step_100.yaml
+config-file: step_95.yaml
 benchmark: stream_c
 extra: --iterationCount=10000 --problemSize=33554432

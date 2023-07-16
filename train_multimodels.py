@@ -105,9 +105,10 @@ class Dynamical_Sys(Env):
         self.action = actual_action
         if new_state[0] > 0:
             self.current_step += new_state[0]
-            reward_0 = -self.c_0 * self.action
-            reward_1 = self.c_1 * self.state[0] / measured_power
-            reward = (reward_0 + reward_1)[0]
+            #reward_0 = -self.c_0 * self.action
+            #reward_1 = self.c_1 * self.state[0] / measured_power
+            #reward = (reward_0 + reward_1)[0]
+            reward = 2*self.state[0]/((measured_power**2/self.action)+measured_power)
 
         else:
             reward = -100
@@ -167,11 +168,11 @@ def exec_main(c_0, c_1):  # main function
 if __name__ == "__main__":
     fig, axs = plt.subplots(2)
     fig.suptitle('power and performance against time')
-    C0_vals = np.linspace(0, 10, 5)
-    C1_vals = np.linspace(0, 10, 5)
-    for i in C0_vals:
-        for l in C1_vals:
-            exec_main(i, l)
+    #C0_vals = np.linspace(0, 10, 5)
+    #C1_vals = np.linspace(0, 10, 5)
+    #for i in C0_vals:
+        #for l in C1_vals:
+    exec_main(0.0, 0.0)
 
 # env = Dynamical_Sys(exec_time)
 # check_env(env, warn=True, skip_render_check=True)
