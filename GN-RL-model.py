@@ -17,7 +17,7 @@ import ruamel.yaml
 
 import nrm.tooling as nrm
 from stable_baselines3 import PPO
-import train_multimodels as ncna
+import train_models as ncna
 import os
 
 # WLs = {'ones-stream-full':0,'ones-stream-add':1,'ones-stream-triad':2,'ones-stream-scale':3,'ones-stream-copy':4,'ones-npb-ep':5}
@@ -35,7 +35,7 @@ PARAMS_PATH = experiment_dir+"PARAMS/"
 param_files = os.listdir(PARAMS_PATH)
 for file in param_files:
     if 'params' in file:
-        und_index = file.find('_')
+        und_index = file.find('-identification')
         name = file[0:und_index]
         APPLICATIONS.append(name)
         with open(PARAMS_PATH+file) as files:
@@ -75,7 +75,7 @@ def logs_conf_func():
         'handlers': {
             'file': {
                 'class': 'logging.FileHandler',
-                'filename': f'./experiment_data/RL_controller/{WORKLOAD}/{LOGGER_NAME}.log',
+                'filename': f'./experiment-data/RL-controller/{WORKLOAD}/{LOGGER_NAME}.log',
                 'mode': 'w',
                 'level': LOGS_LEVEL,
                 'formatter': 'precise',
@@ -184,6 +184,7 @@ CTRL_CONFIG_SCHEMA = {
 
 def read_controller_configuration(filepath):
     yaml_parser = ruamel.yaml.YAML(typ='safe', pure=True)
+    print(filepath)
     raw_config = yaml_parser.load(pathlib.Path(filepath))
 
     # check controller configuration follows the defined schema
@@ -236,7 +237,7 @@ assert DUMPED_MSG_TYPES.issubset(CSV_FIELDS)
 
 def initialize_csvwriters(stack: contextlib.ExitStack):
     csvfiles = {
-        msg_type: stack.enter_context(open(f'./experiment_data/RL_controller/{WORKLOAD}/dump_{msg_type}.csv', 'w'))
+        msg_type: stack.enter_context(open(f'./experiment-data/RL-controller/{WORKLOAD}/dump_{msg_type}.csv', 'w'))
         for msg_type in DUMPED_MSG_TYPES
     }
 

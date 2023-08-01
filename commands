@@ -5,5 +5,6 @@ bash execute-identification.sh
 python static-analysis.py
 python generate-yaml-files.py
 bash execute-PI-controller.sh
+python train_models.py
 bash execute-RL-controller.sh
 python combined-plot-generator.py

@@ -17,7 +17,7 @@ from stable_baselines3 import PPO
 
 # import new_code_normalized_Action as ncna
 from datetime import datetime
-import RL_data_generator as RLDG
+import data_generator as RLDG
 #
 #fig, axs = plt.subplots(2)
 #fig.suptitle('power and performance against time')
@@ -37,7 +37,7 @@ PARAMS_PATH = experiment_dir+"PARAMS/"
 param_files = os.listdir(PARAMS_PATH)
 for file in param_files:
     if 'params' in file:
-        und_index = file.find('_')
+        und_index = file.find('-identification')
         name = file[0:und_index]
         APPLICATIONS.append(name)
         with open(PARAMS_PATH+file) as files:
@@ -60,7 +60,7 @@ num_cols = (num_subplots + num_rows - 1) // num_rows
 colors = sns.color_palette("colorblind", num_subplots)
 
 fig_pareto, axes_pareto = plt.subplots(nrows=num_rows, ncols=num_cols)
-axes_pareto = axes_pareto.ravel()
+axes_pareto = [axes_pareto]
 margin = 0.3937  
 top_margin = 1 * margin / fig_pareto.get_figheight()
 bottom_margin = 1 * margin / fig_pareto.get_figheight()
@@ -77,15 +77,16 @@ fig_pareto.subplots_adjust(
 )
 
 
-EX_DIRS = [item for item in next(os.walk('./experiment_data/'))[1] if 'control' in item]
+EX_DIRS = [item for item in next(os.walk('./experiment-data/'))[1] if 'control' in item]
 print(EX_DIRS)
 for ex in EX_DIRS:
-     experiment_dir = f'./experiment_data/{ex}/'
-     print(experiment_dir)
+     experiment_dir = f'./experiment-data/{ex}/'
+     # print(experiment_dir)
      clusters = next(os.walk(experiment_dir))[1]
-
+     # print(clusters)
      for cluster in clusters:
           print(cluster)
+          print(APPLICATIONS)
           k = APPLICATIONS.index(cluster)
           data,traces = RLDG.generate_data(experiment_dir,cluster)
           pareto = {}
@@ -94,8 +95,8 @@ for ex in EX_DIRS:
                data[cluster][trace]['aggregated_values']['energy'] = np.nansum([np.nansum([data[cluster][trace]['rapl_sensors']['value'+str(package_number)].iloc[i+1]*data[cluster][trace]['aggregated_values']['rapls_periods'].iloc[i][0] for i in range(0,len(data[cluster][trace]['aggregated_values']['rapls_periods'].index))]) for package_number in range(0,4)])
                if 'RL' in ex:
                     nof = data[cluster][trace]['weights'][0]
-                    ind1 = nof.find('_')
-                    ind2 = nof.find('___')
+                    ind1 = nof.find('-')
+                    ind2 = nof.find('---')
                     c_1 = round(float(nof[ind1+1:ind2]),1)
                     c_2 = round(float(nof[ind2+3:]),1)
                     data[cluster][trace]['label'] = (c_1,c_2)

@@ -30,8 +30,8 @@ else
 fi
 
 
-declare -r DATADIR=./experiment_inputs/identification-inputs
-declare -r OUTPUTDIR=./experiment_data/${APPLICATION}-identification
+declare -r DATADIR=./experiment-inputs/identification-inputs
+declare -r OUTPUTDIR=./experiment-data/${APPLICATION}-identification
 declare -r BENCHMARK='stream_c'
 declare -r RUNNER='identification'
 declare -r PARAMS_FILE='parameters.yaml'
@@ -131,14 +131,10 @@ do
 		  python identification.py ${cfg} ones-solvers-bicgstab 20000 poor 0 10000
                 else
                   python identification.py ${cfg} -- $APPLICATION ${PROBLEM_SIZE} ${ITERATION_COUNT}
-
                 fi
 		tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
 		snapshot_system_state "${archive}" 'post'
 		xz --compress "${archive}"
-		# sleep 10
-		# python enforce_max_power.py max-range-config.yaml
-        	# sleep 30
 		echo __________________________________________________________________________________________________
 	fi
 

@@ -160,7 +160,7 @@ do
 			# compress archive
 			xz --compress "${archive}"
 	sleep 20
-	python enforce-max-power.py max-range-config.yaml
+	python enforce-max-power.py ./reference-formats/max-range-config.yaml
 	echo __________________________________________________________________________________________________
 	sleep 20
 	fi

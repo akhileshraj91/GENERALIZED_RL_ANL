@@ -17,13 +17,16 @@ yaml_format = ruamel.yaml.YAML()
 warnings.filterwarnings('ignore')
 
 cluster_num = 0
+RESULT_DIR = './RESULTS'
+if not os.path.exists(RESULT_DIR):
+    os.makedirs(RESULT_DIR)
 
 # =============================================================================
 # Experiment selection and load data
 # =============================================================================
 # Getting the right paths
 exp_type = 'identification' 
-experiment_dir = './experiment_data/'
+experiment_dir = './experiment-data/'
 clusters = [item for item in next(os.walk(experiment_dir))[1] if exp_type in item]
 print(clusters)
 if (exp_type == 'stairs') or (exp_type == 'static_characteristic'):
@@ -152,7 +155,8 @@ tot_cluster = len(clusters)
 num_rows = int(tot_cluster ** 0.5)
 num_cols = (tot_cluster + num_rows - 1) // num_rows
 fig_P, axes_P = plt.subplots(nrows=num_rows, ncols=num_cols)
-axes_P = axes_P.ravel()
+# print(axes_P)
+axes_P = [axes_P]
 margin = 0.3937  
 top_margin = 1 * margin / fig_P.get_figheight()
 bottom_margin = 1 * margin / fig_P.get_figheight()
@@ -168,7 +172,7 @@ fig_P.subplots_adjust(
      wspace=0.2
 )
 axes_P[0].set_ylabel('Measured Power [W]')
-axes_P[4].set_ylabel('Measured Power [W]')
+# axes_P[4].set_ylabel('Measured Power [W]')
 x_zoom = [0,150]
 y_zoom = [0,150]
 for cluster in clusters:
@@ -299,7 +303,8 @@ plt.rcParams.update({'font.size': 14})
 
 legend = []
 fig, axes = plt.subplots(nrows = num_rows, ncols=num_cols)
-axes = axes.ravel()
+# axes = axes.ravel()
+axes = [axes]
 margin = 0.3937  
 top_margin = 0.5 * margin / fig.get_figheight()
 bottom_margin = 1 * margin / fig.get_figheight()
@@ -356,7 +361,7 @@ for cluster in clusters:
     print('linear gain - K_L - [Hz]]: '+str(round(power2perf_params[cluster][1],1)))
 
 
-    with open(r'./experiment_data/sample_params.yaml') as file:
+    with open(r'./reference-formats/sample-params.yaml') as file:
         parameters = yaml_format.load(file)
         parameters['rapl']['slope'] = float(round(power_parameters[cluster][0],2))
         parameters['rapl']['offset'] = float(round(power_parameters[cluster][1],2))
@@ -369,6 +374,6 @@ for cluster in clusters:
 
     if not os.path.exists('./PARAMS/'):
         os.makedirs('./PARAMS')
-    with open(f'./PARAMS/{cluster}_params.yaml','w') as file2:
+    with open(f'./PARAMS/{cluster}-params.yaml','w') as file2:
         yaml_format.dump(parameters, file2)
   

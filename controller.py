@@ -48,7 +48,7 @@ def logs_conf_func():
         'handlers': {
             'file': {
                 'class': 'logging.FileHandler',
-                'filename': f'./experiment_data/PI_control/{WORKLOAD}/{LOGGER_NAME}.log',
+                'filename': f'./experiment-data/PI-control/{WORKLOAD}/{LOGGER_NAME}.log',
                 'mode': 'w',
                 'level': LOGS_LEVEL,
                 'formatter': 'precise',
@@ -208,7 +208,7 @@ assert DUMPED_MSG_TYPES.issubset(CSV_FIELDS)
 
 def initialize_csvwriters(stack: contextlib.ExitStack):
     csvfiles = {
-        msg_type: stack.enter_context(open(f'./experiment_data/PI_control/{WORKLOAD}/dump_{msg_type}.csv', 'w'))
+        msg_type: stack.enter_context(open(f'./experiment-data/PI-control/{WORKLOAD}/dump_{msg_type}.csv', 'w'))
         for msg_type in DUMPED_MSG_TYPES
     }
 

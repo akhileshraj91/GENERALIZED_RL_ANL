@@ -141,11 +141,11 @@ do
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${PRERUN_SNAPSHOT_FILES[@]}"
                 snapshot_system_state "${archive}" 'pre'
 				if [ "$APPLICATION" == "ones-solvers-cg" ]; then
-		  			python GN-RL-model.py max-range-config.yaml ones-solvers-cg 10000 poor 0 10000 ${cfg}
+		  			python GN-RL-model.py ./reference-formats/max-range-config.yaml ones-solvers-cg 10000 poor 0 10000 ${cfg}
                 elif [ "$APPLICATION" == "ones-solvers-bicgstab" ]; then
-		  			python GN-RL-model.py max-range-config.yaml ones-solvers-bicgstab 20000 poor 0 10000 ${cfg}
+		  			python GN-RL-model.py ./reference-formats/max-range-config.yaml ones-solvers-bicgstab 20000 poor 0 10000 ${cfg}
                 else
-                	python GN-RL-model.py max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
+                	python GN-RL-model.py ./reference-formats/max-range-config.yaml -- ${APPLICATION} ${PROBLEM_SIZE} ${ITERATION_COUNT} ${cfg}
 				fi
                 # retrieve benchmark logs and snapshot post-run state
                 tar --append --file="${archive}" --directory="${OUTPUTDIR}" -- "${POSTRUN_SNAPSHOT_FILES[@]}"
@@ -155,7 +155,7 @@ do
                 # compress archive
                 xz --compress "${archive}"
 		sleep 20
-	        python enforce-max-power.py max-range-config.yaml
+	        python enforce-max-power.py ./reference-formats/max-range-config.yaml
                 echo __________________________________________________________________________________________________
 		sleep 20
         fi

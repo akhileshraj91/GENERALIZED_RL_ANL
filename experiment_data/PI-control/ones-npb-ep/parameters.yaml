@@ -1,5 +1,0 @@
-timestamp: 2023-07-16T03:04:15+00:00
-runner: 
-config-file: min
-benchmark: stream_c
-extra: --iterationCount=10000 --problemSize=22
