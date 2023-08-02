@@ -1,5 +1,5 @@
-timestamp: 2023-08-01T22:20:26+00:00
+timestamp: 2023-08-02T02:53:35+00:00
 runner: 
-config-file: gros_setpoint-40.yaml
+config-file: gros_setpoint-97.yaml
 benchmark: stream_c
-extra: --iterationCount=100 --problemSize=33554432
+extra: --iterationCount=10000 --problemSize=33554432

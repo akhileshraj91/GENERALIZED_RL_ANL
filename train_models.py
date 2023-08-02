@@ -172,5 +172,5 @@ if __name__ == "__main__":
     C1_vals = np.linspace(0, 10, 10)
     for i in C0_vals:
         for l in C1_vals:
-            exec_main(0.0, 0.0)
+            exec_main(i,l)
 
