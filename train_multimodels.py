@@ -108,7 +108,8 @@ class Dynamical_Sys(Env):
             #reward_0 = -self.c_0 * self.action
             #reward_1 = self.c_1 * self.state[0] / measured_power
             #reward = (reward_0 + reward_1)[0]
-            reward = 2*self.state[0]/((measured_power**2/self.action)+measured_power)
+            #print(self.c_0,self.c_1)
+            reward = self.c_0*self.state[0]/((measured_power**self.c_1/self.action)+measured_power)
 
         else:
             reward = -100
@@ -132,11 +133,12 @@ class Dynamical_Sys(Env):
 
 def exec_main(c_0, c_1):  # main function
     env = Dynamical_Sys(exec_steps, c_0=c_0,c_1=c_1)
-    model = PPO("MlpPolicy", env, verbose=1)
+    model = PPO("MlpPolicy", env, verbose=1,learning_rate=0.0008)
 
     # Access the optimizer for the actor network
     actor_optimizer = model.policy.optimizer
     print(actor_optimizer)
+
 
     # Retrieve the learning rate for the actor network
     actor_learning_rate = actor_optimizer.param_groups[0]['lr']
@@ -161,18 +163,18 @@ def exec_main(c_0, c_1):  # main function
     # num_layers = sum(1 for _ in value_parameters)
     # print("Number of layers in the value network:", num_layers)
 
-    model.learn(total_timesteps=15000)
+    model.learn(total_timesteps=1305776)
     model.save("./experiment_data/models_" + str("all") + "/dynamics_" + str(c_0) + "___" + str(c_1))
 
 
 if __name__ == "__main__":
     fig, axs = plt.subplots(2)
     fig.suptitle('power and performance against time')
-    #C0_vals = np.linspace(0, 10, 5)
-    #C1_vals = np.linspace(0, 10, 5)
-    #for i in C0_vals:
-        #for l in C1_vals:
-    exec_main(0.0, 0.0)
+    C0_vals = np.linspace(1, 10, 4)
+    C1_vals = np.linspace(1, 10, 4)
+    for i in C0_vals:
+        for l in C1_vals:
+            exec_main(i,l)
 
 # env = Dynamical_Sys(exec_time)
 # check_env(env, warn=True, skip_render_check=True)
