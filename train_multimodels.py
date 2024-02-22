@@ -39,7 +39,7 @@ for file in param_files:
 
 # print(APPLICATIONS)
 TOTAL_WL = len(APPLICATIONS)
-T_S = 1
+#T_S = 1
 exec_steps = 10000                                                                                                      # Total clock cycles needed for the execution of program.
 ACTION_MIN = 40                                                                                                         # Minima of control space (power cap), Please do not change while using mathematical model for simulations.
 ACTION_MAX = 200                                                                                                        # Maxima of control space
@@ -52,7 +52,7 @@ exec_time = 10000
 tau = 0.33
 
 # print(APPLICATIONS)
-def progress_funct(state, p_cap):                                                                                       # Function definition of the mathematical model of cluster performance and pcap relation.
+def progress_funct(state, p_cap, T_S):                                                                                       # Function definition of the mathematical model of cluster performance and pcap relation.
     # p_now = abnormal_obs(state[0])
     # print("The state transmitted are:",state)
     p_now = state[0]
@@ -81,7 +81,7 @@ def abnormal_action(a):
     return a * (ACTION_MAX-ACTION_MIN)/2 + ACT_MID
 
 class Dynamical_Sys(Env):
-    def __init__(self, exec_time, c_0=0, c_1=0):
+    def __init__(self, exec_time, c_0=0, c_1=0, sampling_time=1):
         self.action_space = Box(low=-1, high=1, shape=(1,))
         self.observation_space = MultiDiscrete([OBS_MAX,TOTAL_WL])
         self.execution_time = exec_time
@@ -91,6 +91,7 @@ class Dynamical_Sys(Env):
         self.total_power = 0
         self.action = None
         self.state = None
+        self.T_S = sampling_time
 
     def step(self, action):
         # actual_state = abnormal_obs(self.state)
@@ -98,16 +99,18 @@ class Dynamical_Sys(Env):
         actual_action = abnormal_action(action)
         # print("action is:", action)
         # print("action converted is:", actual_action)
-        new_state, add_on, measured_power = progress_funct(actual_state, actual_action)
+        new_state, add_on, measured_power = progress_funct(actual_state, actual_action, self.T_S)
         # normalized_new_state = normal_obs(new_state[0])
         self.state = np.array(new_state)
         # self.action = action[0]
         self.action = actual_action
         if new_state[0] > 0:
             self.current_step += new_state[0]
-            reward_0 = -self.c_0 * self.action
-            reward_1 = self.c_1 * self.state[0] / measured_power
-            reward = (reward_0 + reward_1)[0]
+            #reward_0 = -self.c_0 * self.action
+            #reward_1 = self.c_1 * self.state[0] / measured_power
+            #reward = (reward_0 + reward_1)[0]
+            #print(self.c_0,self.c_1)
+            reward = self.c_0*self.state[0]/((measured_power**self.c_1/self.action)+measured_power)
 
         else:
             reward = -100
@@ -129,13 +132,14 @@ class Dynamical_Sys(Env):
         self.total_power = 0
         return self.state
 
-def exec_main(c_0, c_1):  # main function
-    env = Dynamical_Sys(exec_steps, c_0=c_0,c_1=c_1)
-    model = PPO("MlpPolicy", env, verbose=1)
+def exec_main(c_0, c_1,T_samp):  # main function
+    env = Dynamical_Sys(exec_steps, c_0=c_0,c_1=c_1,sampling_time=T_samp)
+    model = PPO("MlpPolicy", env, verbose=1,learning_rate=0.0008)
 
     # Access the optimizer for the actor network
     actor_optimizer = model.policy.optimizer
     print(actor_optimizer)
+
 
     # Retrieve the learning rate for the actor network
     actor_learning_rate = actor_optimizer.param_groups[0]['lr']
@@ -160,18 +164,20 @@ def exec_main(c_0, c_1):  # main function
     # num_layers = sum(1 for _ in value_parameters)
     # print("Number of layers in the value network:", num_layers)
 
-    model.learn(total_timesteps=15000)
-    model.save("./experiment_data/models_" + str("all") + "/dynamics_" + str(c_0) + "___" + str(c_1))
+    model.learn(total_timesteps=1305776)
+    model.save("./experiment_data/models_" + str("all") + "/dynamics_" + str(c_0) + "," + str(c_1) + "___"+ str(T_samp))
 
 
 if __name__ == "__main__":
     fig, axs = plt.subplots(2)
     fig.suptitle('power and performance against time')
-    C0_vals = np.linspace(0, 10, 5)
-    C1_vals = np.linspace(0, 10, 5)
-    for i in C0_vals:
-        for l in C1_vals:
-            exec_main(i, l)
+    C0_vals = np.linspace(1, 10, 4)
+    C1_vals = np.linspace(1, 10, 4)
+    #for i in C0_vals:
+        #for l in C1_vals:
+    time_samps = np.linspace(0,1,10)
+    for i in time_samps:    
+        exec_main(4,1,i)
 
 # env = Dynamical_Sys(exec_time)
 # check_env(env, warn=True, skip_render_check=True)

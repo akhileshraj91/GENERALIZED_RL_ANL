@@ -5,9 +5,9 @@ rapl:
   offset: 0.4
 
 model:
-  alpha: 0.041
-  beta: 25.7
-  gain: 172.0
+  alpha: 0.032
+  beta: 26.4
+  gain: 176.3
   time-constant: 0.33
 
 controller:

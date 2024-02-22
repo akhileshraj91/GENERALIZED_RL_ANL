@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-triad_identification/* ./ones-stream-triad_identification/
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-add_identification/* ./ones-stream-add_identification/
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-scale_identification/* ./ones-stream-scale_identification/
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-copy_identification/* ./ones-stream-copy_identification/
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-full_identification/* ./ones-stream-full_identification/
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-solvers-cg_identification/* ./ones-solvers-cg_identification/
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-solvers-bicgstab_identification/* ./ones-solvers-bicgstab_identification/
+scp -r cc@192.5.87.40:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-npb-ep_identification/* ./ones-npb-ep_identification/
+=======
 # bash execute_generate_models.sh
 # bash execute_generate_models.sh ones-stream-copy
 # bash execute_generate_models.sh ones-stream-add
@@ -6,8 +16,24 @@
 # bash execute_generate_models.sh ones-npb-ep
 # bash execute_generate_models.sh ones-solvers-cg
 # bash execute_generate_models.sh ones-solvers-bicgstab
+>>>>>>> 34251e9f0e52ad031ba0fbf2b65be720f7d25b99
+
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-triad_identification/* ./ones-stream-triad_identification/
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-add_identification/* ./ones-stream-add_identification/
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-scale_identification/* ./ones-stream-scale_identification/
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-copy_identification/* ./ones-stream-copy_identification/
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-stream-full_identification/* ./ones-stream-full_identification/
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-solvers-cg_identification/* ./ones-solvers-cg_identification/
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-solvers-bicgstab_identification/* ./ones-solvers-bicgstab_identification/
+scp -r cc@192.5.87.81:/home/cc/GENERALIZED_RL_ANL/experiment_data/ones-npb-ep_identification/* ./ones-npb-ep_identification/
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> c04d4bb0bbfd81d4ead4f65aff858a4c6ee5518c
 bash execute_identification.sh
 bash execute_identification.sh ones-stream-copy
 bash execute_identification.sh ones-stream-add
@@ -26,5 +52,9 @@ bash execute_identification.sh ones-solvers-bicgstab
 # bash execute_PI_control.sh ones-npb-ep
 # bash execute_PI_control.sh ones-solvers-cg
 # bash execute_PI_control.sh ones-solvers-bicgstab
+<<<<<<< HEAD
+=======
+>>>>>>> 34251e9f0e52ad031ba0fbf2b65be720f7d25b99
+>>>>>>> c04d4bb0bbfd81d4ead4f65aff858a4c6ee5518c
 
 
