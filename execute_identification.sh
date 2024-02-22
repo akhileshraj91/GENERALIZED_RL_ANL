@@ -10,7 +10,7 @@ export OMP_PLACES=threads
 #export OMP_NUM_THREADS=24
 
 declare -r PROGRAM=${0##*/}
-declare -r ITERATION_COUNT=10000
+declare -r ITERATION_COUNT=1000
 # declare -r PROBLEM_SIZE='33_554_432'
 
 if [ -z "$1" ]; then
