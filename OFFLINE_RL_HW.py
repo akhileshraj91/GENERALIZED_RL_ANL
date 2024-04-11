@@ -398,6 +398,7 @@ class PIController:
                 # action, _states = self.model.predict(obs, deterministic=True)
                 ab_action = action+40
                 powercap = ab_action
+                # powercap = 120
 
                 print(powercap)
                 #print(">>>>>>>>>>>>>>>>>>>>>>>>>>>",powercap)

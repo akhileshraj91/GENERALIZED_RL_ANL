@@ -1,0 +1,7 @@
+version: 1
+actions:
+  - {time: 0, action: 'set_rapl_powercap', args: [40]}
+  - {time: 20, action: 'set_rapl_powercap', args: [60]}
+  - {time: 40, action: 'set_rapl_powercap', args: [80]}
+  - {time: 60, action: 'set_rapl_powercap', args: [100]}
+  - {time: 80, action: 'set_rapl_powercap', args: [120]}
